@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-defineProps<{ msg: string }>()
+// type-based declaration NOT runtime declaration
+defineProps<{ msg: string, bar?: number }>()
 
 const count = ref(0)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+  <p>{{ bar }}</p>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
