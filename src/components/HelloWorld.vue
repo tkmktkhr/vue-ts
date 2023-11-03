@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+interface Props {
+  msg: string
+  num?: number
+}
+
 // type-based declaration NOT runtime declaration
-defineProps<{ msg: string, bar?: number }>()
+withDefaults(defineProps<Props>(), {
+  msg: 'default message',
+  num: 0,
+})
 
 const count = ref(0)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-  <p>{{ bar }}</p>
+  <p>{{ num }}</p>
+  <p>{{ num === 0 ? 'no input' : num }}</p>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
