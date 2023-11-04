@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useCounterStore } from '@/stores/counter'
+import { useCounterStore } from '@/stores/CounterStore.ts'
 
 const counter = useCounterStore()
 
@@ -56,3 +56,4 @@ const num = ref(0)
   color: #888;
 }
 </style>
+@/stores/CounterStore

@@ -15,8 +15,10 @@ import { ref } from 'vue'
 // })
 
 // Another expression
-export const useCounterStore = defineStore('counter', () => {
+export const useCounterStore = defineStore('CounterStore', () => {
+  // state
   const count = ref(0)
+  // actions
   function increment() {
     count.value++
   }
