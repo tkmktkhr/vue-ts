@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useCounterStore } from '@/stores/CounterStore.ts'
-import { IProduct } from '@/stores/ProductStore.ts'
+import { ref } from 'vue';
+import { useCounterStore } from '@/stores/CounterStore.ts';
+import { IProduct } from '@/stores/ProductStore.ts';
 
-const counter = useCounterStore()
+const counter = useCounterStore();
 
-counter.count++
+counter.count++;
 // with autocompletion ✨
-counter.$patch({ count: counter.count + 1 })
+counter.$patch({ count: counter.count + 1 });
 // or using an action instead
-counter.increment()
+counter.increment();
 
 interface Props {
-  msg: string
-  num?: number
-  products: IProduct[]
+  msg: string;
+  num?: number;
+  products: IProduct[];
 }
 
 // type-based declaration NOT runtime declaration
 withDefaults(defineProps<Props>(), {
   msg: 'default message',
   num: 0,
-})
+});
 
-const num = ref(0)
+const num = ref(0);
 </script>
 
 <template>

@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 // export const useCounterStore = defineStore('counter', {
 //   state: () => {
@@ -17,11 +17,11 @@ import { ref } from 'vue'
 // Another expression
 export const useCounterStore = defineStore('CounterStore', () => {
   // state
-  const count = ref(0)
+  const count = ref(0);
   // actions
   function increment() {
-    count.value++
+    count.value++;
   }
 
-  return { count, increment }
-})
+  return { count, increment };
+});

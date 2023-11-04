@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 // import products from '@/data/products.json'
 
 // export const useCounterStore = defineStore('counter', {
@@ -29,13 +29,14 @@ export const useProductStore = defineStore('ProductStore', {
   // state
   state: (): State => {
     return {
-      products: []
+      products: [],
     };
   },
   // actions
   actions: {
-    async fill(){
+    async fill() {
       this.products = (await import('@/data/products.json')).default;
-    }
-  }
+      // this.products = (await axious.get('http://localhost:3000/products')).data;
+    },
+  },
 });
