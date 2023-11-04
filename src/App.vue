@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue';
+import TheHeader from '@/components/TheHeader.vue';
+import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 // can not call actions
 // import { storeToRefs } from 'pinia';
@@ -9,6 +11,16 @@ productStore.fill(); // .e.g. calling API?
 </script>
 
 <template>
+  <div class="container">
+    <TheHeader />
+    <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
+      <ProductCard
+        v-for="product in productStore.products"
+        :key="product.name"
+        :product="product"
+      />
+    </ul>
+  </div>
   <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -17,7 +29,11 @@ productStore.fill(); // .e.g. calling API?
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="this is a message" :num=0 :products="productStore.products" />
+  <HelloWorld
+    msg="this is a message"
+    :num="0"
+    :products="productStore.products"
+  />
 </template>
 
 <style scoped>
