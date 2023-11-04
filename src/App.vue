@@ -10,6 +10,15 @@ import { useCartStore } from '@/stores/CartStore';
 const productStore = useProductStore();
 productStore.fill(); // .e.g. calling API?
 const cartStore = useCartStore();
+// to actions on CartStore
+// const addToCart = (count: number, product: IProduct) => {
+//   // count = parseInt(count);
+//   cartStore.$patch((state) => {
+//     for (let i = 0; i < count; i++) {
+//       state.items.push(product);
+//     }
+//   });
+// };
 </script>
 
 <template>
@@ -20,7 +29,7 @@ const cartStore = useCartStore();
         v-for="product in productStore.products"
         :key="product.name"
         :product="product"
-        @addToCart="cartStore.items.push(product)"
+        @addToCart="cartStore.addItems($event, product)"
       />
     </ul>
   </div>

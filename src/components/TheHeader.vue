@@ -6,7 +6,7 @@ import CartWidget from './CartWidget.vue';
 <template>
   <header
     class="flex justify-between p-6 mb-10 items-center"
-    style="background-image: url('/images/double-bubble-outline.png')"
+    style="background-image: url('/vite.svg')"
   >
     <h1 class="text-4xl text-gray-700 font-bold">The Pineapple Stand</h1>
     <CartWidget />

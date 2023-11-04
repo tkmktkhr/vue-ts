@@ -1,13 +1,8 @@
 import { defineStore } from 'pinia';
+import { IProduct } from '@/stores/ProductStore';
 
 interface State {
-  items: ICart[];
-}
-
-export interface ICart {
-  name: string;
-  image: string;
-  price: number;
+  items: IProduct[];
 }
 
 // Another expression
@@ -18,11 +13,14 @@ export const useCartStore = defineStore('CartStore', {
       items: [],
     };
   },
+
   // actions
   actions: {
-    async fill() {
-      // this.carts = (await import('@/data/carts.json')).default;
-      // this.carts = (await axious.get('http://localhost:3000/carts')).data;
+    addItems(count: number, item: IProduct) {
+      for (let i = 0; i < count; i++) {
+        // mutations?
+        this.items.push(item);
+      }
     },
   },
 });
