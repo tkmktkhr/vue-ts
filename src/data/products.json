@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Apple",
+    "image": "1",
+    "price":4
+  },
+  {
+    "name": "Pineapple",
+    "image": "img2",
+    "price":5
+  },
+  {
+    "name": "Pineapple Gum",
+    "image": "img3",
+    "price":3
+  },
+  {
+    "name": "Pineapple T-shirt",
+    "image": "img4",
+    "price": 12
+  }
+]
