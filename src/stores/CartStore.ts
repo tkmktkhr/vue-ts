@@ -19,7 +19,7 @@ export const useCartStore = defineStore('CartStore', {
     addItems(count: number, item: IProduct) {
       for (let i = 0; i < count; i++) {
         // mutations?
-        this.items.push(item);
+        this.items.push({ ...item }); // if one item is changed, it will not affect other object(same type object).
       }
     },
   },
