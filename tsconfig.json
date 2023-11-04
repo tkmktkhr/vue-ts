@@ -23,14 +23,16 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "node_modules/*"
-      ],
-      "@/*": [
-        "src/*"
-      ]
-    },
+      "*": ["node_modules/*"],
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/plugins/FontAwesome.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

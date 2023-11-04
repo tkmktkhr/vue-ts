@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 interface State {
-  carts: ICart[];
+  items: ICart[];
 }
 
 export interface ICart {
@@ -15,7 +15,7 @@ export const useCartStore = defineStore('CartStore', {
   // state
   state: (): State => {
     return {
-      carts: [],
+      items: [],
     };
   },
   // actions

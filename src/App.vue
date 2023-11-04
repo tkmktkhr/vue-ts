@@ -3,11 +3,13 @@ import HelloWorld from '@/components/HelloWorld.vue';
 import TheHeader from '@/components/TheHeader.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
+import { useCartStore } from '@/stores/CartStore';
 // can not call actions
 // import { storeToRefs } from 'pinia';
 // const { products } = storeToRefs(useProductStore());
 const productStore = useProductStore();
 productStore.fill(); // .e.g. calling API?
+const cartStore = useCartStore();
 </script>
 
 <template>
@@ -18,6 +20,7 @@ productStore.fill(); // .e.g. calling API?
         v-for="product in productStore.products"
         :key="product.name"
         :product="product"
+        @addToCart="cartStore.items.push(product)"
       />
     </ul>
   </div>
