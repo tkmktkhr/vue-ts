@@ -14,12 +14,28 @@ import products from '@/data/products.json'
 //   },
 // })
 
+interface State {
+  products: IProduct[];
+}
+
+interface IProduct {
+  name: string;
+  image: string;
+  price: number;
+}
+
 // Another expression
 export const useProductStore = defineStore('ProductStore', {
   // state
-  state: () => {
+  state: (): State => {
     return {
-      products,
+      products: []
     };
   },
+  // actions
+  actions: {
+    fill(){
+      this.products = products;
+    }
+  }
 });

@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue'
 import { useProductStore } from '@/stores/ProductStore';
-import { storeToRefs } from 'pinia';
-const { products } = storeToRefs(useProductStore());
+// can not call actions
+// import { storeToRefs } from 'pinia';
+// const { products } = storeToRefs(useProductStore());
+const productStore = useProductStore();
+productStore.fill(); // .e.g. calling API?
 </script>
 
 <template>
@@ -14,7 +17,7 @@ const { products } = storeToRefs(useProductStore());
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld :msg="products" :num=0 />
+  <HelloWorld :msg="productStore.products" :num=0 />
 </template>
 
 <style scoped>
