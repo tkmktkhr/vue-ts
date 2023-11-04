@@ -3,6 +3,7 @@ import { IProduct } from '@/stores/ProductStore';
 
 interface State {
   items: IProduct[];
+  count: number;
 }
 
 // Another expression
@@ -11,16 +12,22 @@ export const useCartStore = defineStore('CartStore', {
   state: (): State => {
     return {
       items: [],
+      count: 0,
     };
   },
 
   // getters
   getters: {
-    count: (state) => state.items.length,
+    count: (state): number => state.items.length,
     // count(): number {
     //   return this.items.length;
     // },
-    isEmpty: (state) => state.items.length === 0,
+    isEmpty: (state): boolean => state.count === 0,
+    /**
+     * Returns the count value times two plus one.
+     *
+     * @returns {boolean}
+     */
     // isEmpty(): boolean {
     //   return this.count === 0;
     // },
