@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import products from '@/data/products.json'
+// import products from '@/data/products.json'
 
 // export const useCounterStore = defineStore('counter', {
 //   state: () => {
@@ -18,7 +18,7 @@ interface State {
   products: IProduct[];
 }
 
-interface IProduct {
+export interface IProduct {
   name: string;
   image: string;
   price: number;
@@ -34,8 +34,8 @@ export const useProductStore = defineStore('ProductStore', {
   },
   // actions
   actions: {
-    fill(){
-      this.products = products;
+    async fill(){
+      this.products = (await import('@/data/products.json')).default;
     }
   }
 });

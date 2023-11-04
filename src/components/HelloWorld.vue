@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useCounterStore } from '@/stores/CounterStore.ts'
+import { IProduct } from '@/stores/ProductStore.ts'
 
 const counter = useCounterStore()
 
@@ -13,6 +14,7 @@ counter.increment()
 interface Props {
   msg: string
   num?: number
+  products: IProduct[]
 }
 
 // type-based declaration NOT runtime declaration
@@ -26,6 +28,7 @@ const num = ref(0)
 
 <template>
   <h1>{{ msg }}</h1>
+  <p>{{ products }}</p>
   <p>num: {{ num }}</p>
   <p>num: {{ num === 0 ? 'no input' : num }}</p>
   <div>Pinia Current Count: {{ counter.count }}</div>

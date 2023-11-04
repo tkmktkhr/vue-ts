@@ -17,7 +17,7 @@ productStore.fill(); // .e.g. calling API?
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld :msg="productStore.products" :num=0 />
+  <HelloWorld msg="this is a message" :num=0 :products="productStore.products" />
 </template>
 
 <style scoped>
