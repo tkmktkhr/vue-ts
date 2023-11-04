@@ -14,6 +14,18 @@ export const useCartStore = defineStore('CartStore', {
     };
   },
 
+  // getters
+  getters: {
+    count: (state) => state.items.length,
+    // count(): number {
+    //   return this.items.length;
+    // },
+    isEmpty: (state) => state.items.length === 0,
+    // isEmpty(): boolean {
+    //   return this.count === 0;
+    // },
+  },
+
   // actions
   actions: {
     addItems(count: number, item: IProduct) {
