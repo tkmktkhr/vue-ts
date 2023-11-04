@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useCounterStore } from '@/stores/counter'
+
+const counter = useCounterStore()
+
+counter.count++
+// with autocompletion ✨
+counter.$patch({ count: counter.count + 1 })
+// or using an action instead
+counter.increment()
 
 interface Props {
   msg: string
@@ -12,16 +21,16 @@ withDefaults(defineProps<Props>(), {
   num: 0,
 })
 
-const count = ref(0)
+const num = ref(0)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-  <p>{{ num }}</p>
-  <p>{{ num === 0 ? 'no input' : num }}</p>
-
+  <p>num: {{ num }}</p>
+  <p>num: {{ num === 0 ? 'no input' : num }}</p>
+  <div>Pinia Current Count: {{ counter.count }}</div>
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="num++">num is {{ num }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
