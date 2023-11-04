@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HelloWorld from '@/components/HelloWorld.vue'
 import { useProductStore } from '@/stores/ProductStore';
-useProductStore();
+const productStore = useProductStore();
 </script>
 
 <template>
@@ -13,7 +13,7 @@ useProductStore();
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" :num=0 />
+  <HelloWorld :msg="productStore.products" :num=0 />
 </template>
 
 <style scoped>
