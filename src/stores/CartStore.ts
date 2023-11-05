@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { IProduct } from '@/stores/ProductStore';
 import { groupBy } from 'lodash';
+import { useAuthUserStore } from './AuthUserStore';
 
 interface IState {
   items: IProduct[];
@@ -65,6 +66,12 @@ export const useCartStore = defineStore('CartStore', {
 
   // actions: not get sth, mutation.
   actions: {
+    checkout() {
+      const authUserStore = useAuthUserStore();
+      alert(
+        `${authUserStore.userName} bought ${this.count} items for a total of ${this.total}`,
+      );
+    },
     addItems(count: number, item: IProduct) {
       for (let i = 0; i < count; i++) {
         // mutations?
