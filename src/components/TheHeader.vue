@@ -1,3 +1,4 @@
+<!-- Options API -->
 <script>
 // imports
 import { useAuthUserStore } from '@/stores/AuthUserStore';
@@ -12,7 +13,7 @@ export default {
 };
 </script>
 
-<!-- with setup -->
+<!-- with setup: Composition API -->
 <!-- <script setup>
 // imports
 import CartWidget from './CartWidget.vue';
