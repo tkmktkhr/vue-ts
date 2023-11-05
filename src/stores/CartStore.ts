@@ -37,8 +37,15 @@ export const useCartStore = defineStore('CartStore', {
     //   return this.count === 0; // access to getter.
     // },
 
-    grouped: (state): { [key: string]: IProduct[] } =>
-      groupBy(state.items, (item: IProduct) => item.name),
+    grouped: (state): { [key: string]: IProduct[] } => {
+      const grouped = groupBy(state.items, (item: IProduct) => item.name);
+      const sorted = Object.keys(grouped).sort();
+      let inOrder = {};
+      sorted.forEach((key) => {
+        inOrder[key] = grouped[key];
+      });
+      return inOrder;
+    },
 
     // Try1 no
     // groupCount(state): {
@@ -52,6 +59,8 @@ export const useCartStore = defineStore('CartStore', {
     // Try3 no
     // groupCount: (): ((name: string) => number) => (name: string) =>
     //   this.grouped[name].length,
+
+    total: (state) => state.items.reduce((acc, item) => acc + item.price, 0),
   },
 
   // actions: not get sth, mutation.
@@ -62,8 +71,16 @@ export const useCartStore = defineStore('CartStore', {
         this.items.push({ ...item }); // not `.push(item)`. if one item is changed, it will not affect other object(same type object).
       }
     },
-    calcTotalPrice(): number {
-      return this.items.reduce((acc, item) => acc + item.price, 0);
+    // Use getter
+    // calcTotalPrice(): number {
+    //   return this.items.reduce((acc, item) => acc + item.price, 0);
+    // },
+    clearItem(itemName: string) {
+      this.items = this.items.filter((item) => item.name !== itemName);
+    },
+    setItemCount(item: IProduct, count: number) {
+      this.clearItem(item.name);
+      this.addItems(count, item);
     },
   },
 });
