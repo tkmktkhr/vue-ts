@@ -2,18 +2,20 @@ import { defineStore } from 'pinia';
 import { IProduct } from '@/stores/ProductStore';
 import { groupBy } from 'lodash';
 
-interface State {
+interface IState {
   items: IProduct[];
-  count: number;
+  // count: number;
+  // grouped: { [key: string]: IProduct[] };
 }
 
 // Another expression
 export const useCartStore = defineStore('CartStore', {
   // state
-  state: (): State => {
+  state: (): IState => {
     return {
-      items: [],
-      count: 0,
+      items: [] as IProduct[],
+      // count: 0,
+      // grouped: {},
     };
   },
 
@@ -23,6 +25,8 @@ export const useCartStore = defineStore('CartStore', {
     // count(): number {
     //   return this.items.length;
     // },
+
+    // why state can be accessed here?
     isEmpty: (state): boolean => state.count === 0,
     /**
      * Returns the boolean: count is empty or not.
@@ -30,14 +34,27 @@ export const useCartStore = defineStore('CartStore', {
      * @returns {boolean}
      */
     // isEmpty(): boolean {
-    //   return this.count === 0;
+    //   return this.count === 0; // access to getter.
     // },
 
-    grouped: (state): object =>
+    grouped: (state): { [key: string]: IProduct[] } =>
       groupBy(state.items, (item: IProduct) => item.name),
+
+    // Try1 no
+    // groupCount(state): {
+    //   return (name: string): number => this.grouped[name].length;
+    // },
+    // Try2 ok
+    // why state can be accessed here?
+    // the bellow does not work TypeScript. Also, arrow func done not handle `this`.
+    groupCount: (state) => (name: string) => state.grouped[name].length,
+    // ??
+    // Try3 no
+    // groupCount: (): ((name: string) => number) => (name: string) =>
+    //   this.grouped[name].length,
   },
 
-  // actions
+  // actions: not get sth, mutation.
   actions: {
     addItems(count: number, item: IProduct) {
       for (let i = 0; i < count; i++) {
