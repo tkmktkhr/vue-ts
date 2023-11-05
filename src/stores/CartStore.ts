@@ -59,8 +59,11 @@ export const useCartStore = defineStore('CartStore', {
     addItems(count: number, item: IProduct) {
       for (let i = 0; i < count; i++) {
         // mutations?
-        this.items.push({ ...item }); // if one item is changed, it will not affect other object(same type object).
+        this.items.push({ ...item }); // not `.push(item)`. if one item is changed, it will not affect other object(same type object).
       }
+    },
+    calcTotalPrice(): number {
+      return this.items.reduce((acc, item) => acc + item.price, 0);
     },
   },
 });
