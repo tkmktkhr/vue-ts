@@ -4,12 +4,34 @@ import TheHeader from '@/components/TheHeader.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
+import { ref, reactive } from 'vue';
+import AppButton from './components/AppButton.vue';
 // can not call actions
 // import { storeToRefs } from 'pinia';
 // const { products } = storeToRefs(useProductStore());
 const productStore = useProductStore();
 productStore.fill(); // .e.g. calling API?
 const cartStore = useCartStore();
+const history = reactive([]);
+const doingHistory = ref(false);
+history.push(JSON.stringify(cartStore.$state));
+// subscribe state
+const undo = () => {
+  if (history.length === 1) return;
+  doingHistory.value = true;
+  history.pop();
+  cartStore.$state = JSON.parse(history.at(-1));
+  // cartStore.$patch(() => state);
+  doingHistory.value = false;
+};
+cartStore.$subscribe((mutation, state) => {
+  // console.log({ mutation }, { state });
+  if (!doingHistory.value) {
+    history.push(JSON.stringify(state));
+  }
+});
+
+// subscribe actions
 cartStore.$onAction(({ name, store, args, after, onError }) => {
   if (name === 'addItems') {
     after(() => {
@@ -36,6 +58,8 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
 <template>
   <div class="container">
     <TheHeader />
+    <div class="mb-5 flex justify-end"></div>
+    <AppButton @click="undo">Undo</AppButton>
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <ProductCard
         v-for="product in productStore.products"
