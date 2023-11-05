@@ -73,6 +73,7 @@ export const useCartStore = defineStore('CartStore', {
       );
     },
     addItems(count: number, item: IProduct) {
+      // throw new Error('NEW ERROR!!!!!!!!!!');
       for (let i = 0; i < count; i++) {
         // mutations?
         this.items.push({ ...item }); // not `.push(item)`. if one item is changed, it will not affect other object(same type object).

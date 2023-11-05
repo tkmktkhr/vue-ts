@@ -10,6 +10,18 @@ import { useCartStore } from '@/stores/CartStore';
 const productStore = useProductStore();
 productStore.fill(); // .e.g. calling API?
 const cartStore = useCartStore();
+cartStore.$onAction(({ name, store, args, after, onError }) => {
+  if (name === 'addItems') {
+    after(() => {
+      // after((result) => {
+      // can get result as a result of promise success.
+      console.log(args[0]); // -> count: number
+    });
+    onError((error) => {
+      console.log('Error________', error.message);
+    });
+  }
+});
 // to actions on CartStore
 // const addToCart = (count: number, product: IProduct) => {
 //   // count = parseInt(count);
