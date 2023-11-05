@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { IProduct } from '@/stores/ProductStore';
+import { groupBy } from 'lodash';
 
 interface State {
   items: IProduct[];
@@ -24,13 +25,16 @@ export const useCartStore = defineStore('CartStore', {
     // },
     isEmpty: (state): boolean => state.count === 0,
     /**
-     * Returns the count value times two plus one.
+     * Returns the boolean: count is empty or not.
      *
      * @returns {boolean}
      */
     // isEmpty(): boolean {
     //   return this.count === 0;
     // },
+
+    grouped: (state): object =>
+      groupBy(state.items, (item: IProduct) => item.name),
   },
 
   // actions
