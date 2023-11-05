@@ -1,9 +1,11 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
+// import { RemovableRef, useLocalStorage } from '@vueuse/core';
 import { IProduct } from '@/stores/ProductStore';
 import { groupBy } from 'lodash';
 import { useAuthUserStore } from './AuthUserStore';
 
 interface IState {
+  // items: RemovableRef<IProduct[]>; // try to use vueuse/core but not work
   items: IProduct[];
   // count: number;
   // grouped: { [key: string]: IProduct[] };
@@ -15,6 +17,7 @@ export const useCartStore = defineStore('CartStore', {
   // state
   state: (): IState => {
     return {
+      // items: useLocalStorage('CartStore:items', [] as IProduct[]),
       items: [] as IProduct[],
       // count: 0,
       // grouped: {},
