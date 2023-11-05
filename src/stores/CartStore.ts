@@ -11,6 +11,7 @@ interface IState {
 
 // Another expression
 export const useCartStore = defineStore('CartStore', {
+  historyEnabled: true,
   // state
   state: (): IState => {
     return {
