@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // imports
 import { ref } from 'vue';
 import CartItem from './CartItem.vue';

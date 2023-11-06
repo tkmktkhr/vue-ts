@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   active: { type: Boolean, default: false },
 });

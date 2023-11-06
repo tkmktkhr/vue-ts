@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   product: { type: Object, required: true },
   count: { type: Number, required: true },
