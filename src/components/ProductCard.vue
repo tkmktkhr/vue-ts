@@ -2,11 +2,18 @@
 // imports
 import { ref } from 'vue';
 import AppCountInput from './AppCountInput.vue';
+import { IProduct } from '@/stores/ProductStore.ts';
 
 // props
-const props = defineProps({
-  product: Object,
-});
+defineProps<{
+  product: IProduct;
+}>();
+
+// not necessary this expression.
+// const props = defineProps<{
+//   product: IProduct;
+// }>();
+// const product = ref(props.product);
 
 // emits
 defineEmits(['addToCart']);
