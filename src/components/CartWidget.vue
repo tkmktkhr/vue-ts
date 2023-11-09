@@ -2,11 +2,12 @@
 // imports
 import { ref } from 'vue';
 import CartItem from './CartItem.vue';
+import { useCartStore } from '@/stores/CartStore';
 // data
 const active = ref(false);
-import { useCartStore } from '@/stores/CartStore';
 const cartStore = useCartStore();
 </script>
+
 <template>
   <div class="relative">
     <!-- Icon that always shows -->
@@ -18,6 +19,7 @@ const cartStore = useCartStore();
     <AppModalOverlay :active="active" @close="active = false">
       <div v-if="!cartStore.isEmpty">
         <ul class="items-in-cart">
+          <!-- why name is string | number? -->
           <CartItem
             v-for="(items, name) in cartStore.grouped"
             :key="name"
