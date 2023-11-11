@@ -1,11 +1,14 @@
 {
   "extends": [
-    "plugin:prettier/recommended"
+    "plugin:vue/vue3-recommended",
+    "plugin:prettier/recommended",
+    "plugin:vuetify/base",
+    "plugin:vuetify/recommended",
+    "eslint:recommended"
   ],
-
-  "plugins": ["prettier"],
-
+  "plugins": ["prettier", "@typescript-eslint", "jest"],
   "rules": {
     "prettier/prettier": "error"
-  }
+  },
+  "parser": "@typescript-eslint/parser"
 }

@@ -5,11 +5,10 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
-// firebase
+// Firebase
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 console.log(import.meta.env.VITE_API_KEY);
 // Your web app's Firebase configuration
@@ -27,7 +26,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-// firebase end
+// Firebase end
 
 // can not call actions
 // import { storeToRefs } from 'pinia';
