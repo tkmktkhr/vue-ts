@@ -20,13 +20,14 @@ const cartStore = useCartStore();
       <div v-if="!cartStore.isEmpty">
         <ul class="items-in-cart">
           <!-- why name is string | number? -->
+          <!-- name must be string because It comes from products.json. -->
           <CartItem
             v-for="(items, name) in cartStore.grouped"
             :key="name"
             :product="items[0]"
-            :count="cartStore.groupCount(name)"
+            :count="cartStore.groupCount(name as string)"
             @updateCount="cartStore.setItemCount(items[0], $event)"
-            @clear="cartStore.clearItem(name)"
+            @clear="cartStore.clearItem(name as string)"
           />
         </ul>
         <div class="flex justify-end text-2xl mb-5">
