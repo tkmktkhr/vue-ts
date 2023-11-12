@@ -5,38 +5,24 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
-// Firebase
-// Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-// https://firebase.google.com/docs/web/setup#available-libraries
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const _analytics = getAnalytics(app);
-// Firebase end
+import { collection, getDocs } from 'firebase/firestore';
+import { useCollection } from 'vuefire';
+import { db } from '@/main';
 
 const fetchDataFromFB = async () => {
   console.log('clicked');
-  const db = getFirestore(app);
+
   const querySnapshot = await getDocs(collection(db, 'products'));
   querySnapshot.forEach((doc) => {
     console.log(`${doc.id} => ${doc.data()}`);
     console.dir(doc.data());
   });
 };
+
+const productsRef = collection(db, 'products');
+const productsDb = useCollection(productsRef);
+console.log({ data: productsDb.data });
+console.log({ value: productsDb.value });
 
 // can not call actions
 // import { storeToRefs } from 'pinia';

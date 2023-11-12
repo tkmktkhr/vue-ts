@@ -10,6 +10,9 @@ import AppModalOverlay from '@/components/AppModalOverlay.vue';
 // Icons and Styles
 import FontAwesomePlugin from './plugins/FontAwesome';
 import { PiniaHistoryPlugin } from '@/plugins/PiniaHistoryPlugin';
+import { getFirestore } from 'firebase/firestore';
+import { createDb } from './db';
+import { VueFire, VueFireAuth } from 'vuefire';
 
 const app = createApp(App);
 
@@ -17,9 +20,20 @@ const app = createApp(App);
 const pinia = createPinia();
 pinia.use(PiniaHistoryPlugin);
 
+const firebase = createDb();
+export const db = getFirestore(firebase);
+
 app
   .use(pinia)
   .use(FontAwesomePlugin)
+  .use(VueFire, {
+    // imported above but could also just be created here
+    firebaseApp: firebase,
+    modules: [
+      // we will see other modules later on
+      VueFireAuth(),
+    ],
+  })
   .component('AppButton', AppButton)
   .component('AppCountInput', AppCountInput)
   .component('AppModalOverlay', AppModalOverlay)
