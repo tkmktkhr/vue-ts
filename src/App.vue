@@ -9,8 +9,8 @@ import AppButton from './components/AppButton.vue';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 // https://firebase.google.com/docs/web/setup#available-libraries
-console.log(import.meta.env.VITE_API_KEY);
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -25,8 +25,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const _analytics = getAnalytics(app);
 // Firebase end
+
+const fetchDataFromFB = async () => {
+  console.log('clicked');
+  const db = getFirestore(app);
+  const querySnapshot = await getDocs(collection(db, 'products'));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+    console.dir(doc.data());
+  });
+};
 
 // can not call actions
 // import { storeToRefs } from 'pinia';
@@ -87,6 +97,7 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
     :num="0"
     :products="productStore.products"
   />
+  <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
 </template>
 
 <style scoped>
