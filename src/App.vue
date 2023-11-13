@@ -6,8 +6,21 @@ import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
 import { collection, getDocs } from 'firebase/firestore';
-import { useCollection } from 'vuefire';
-import { db } from '@/main';
+import { useCollection, useFirestore } from 'vuefire';
+
+const db = useFirestore();
+
+// collection
+console.log('loading products ...');
+const productsRef = collection(db, 'products');
+const productsDb = useCollection(productsRef);
+console.log({ value: productsDb });
+console.log('loaded products ...');
+
+// document
+// import { useDocument } from 'vuefire'
+// import { doc } from 'firebase/firestore'
+// const settings = useDocument(doc(db, 'settings', 'some_id'))
 
 const fetchDataFromFB = async () => {
   console.log('clicked');
@@ -18,11 +31,6 @@ const fetchDataFromFB = async () => {
     console.dir(doc.data());
   });
 };
-
-const productsRef = collection(db, 'products');
-const productsDb = useCollection(productsRef);
-console.log({ data: productsDb.data });
-console.log({ value: productsDb.value });
 
 // can not call actions
 // import { storeToRefs } from 'pinia';
@@ -84,6 +92,12 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
     :products="productStore.products"
   />
   <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
+  {{ productsDb }}
+  <!-- <ul>
+    <li v-for="p in productsDb" :key="p.name">
+      <span>{{ p.name }}: ${{ p.price }}</span>
+    </li>
+  </ul> -->
 </template>
 
 <style scoped>
