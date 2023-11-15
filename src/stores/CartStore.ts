@@ -29,7 +29,7 @@ interface Actions {
   setItemCount: (item: IProduct, count: number) => void;
 }
 
-// Another expression
+// Option API type expression
 export const useCartStore = defineStore<'CartStore', IState, Getters, Actions>(
   'CartStore',
   {

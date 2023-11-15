@@ -2,36 +2,39 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 // Options API
-// export const useCounterStore = defineStore('counter', {
-//   state: () => {
-//     return { count: 0 }
+// interface IState {
+//   count: number;
+// }
+
+// not working
+// interface Getters<S> {
+//   count: (state: IState) => S;
+// }
+
+// interface Actions {
+//   increment: () => void;
+// }
+
+// export const useCounterStore = defineStore<
+//   'Counter',
+//   IState,
+//   Getters<IState>,
+//   Actions
+// >('Counter', {
+//   state: (): IState => {
+//     return { count: 0 };
 //   },
 //   // could also be defined as
 //   // state: () => ({ count: 0 })
 //   actions: {
 //     increment() {
-//       this.count++
+//       this.count++;
 //     },
 //   },
-// })
+// });
 
-// interface Getters {
-//   count: (state: IState) => number;
-//   isEmpty: (state: IState) => boolean;
-//   grouped: (state: IState) => TGrouped;
-//   groupCount: (state: IState) => (name: string) => number;
-//   total: (state: IState) => number;
-// }
-
-// interface Actions {
-//   addBork: (bork: string) => void;
-//   checkout: () => void;
-//   addItems: (count: number, item: IProduct) => IProduct[];
-//   clearItem: (itemName: string) => void;
-//   setItemCount: (item: IProduct, count: number) => void;
-// }
-
-// Another expression: Composition API's style
+// Setup store expression: Composition API's style
+// this type is not necessary type definition.
 // ref()s become state properties
 // computed()s become getters
 // function()s become actions
