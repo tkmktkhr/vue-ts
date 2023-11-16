@@ -62,7 +62,7 @@ export const useCartStore = defineStore<'CartStore', IState, Getters, Actions>(
         return this.count === 0; // access to getter.
       },
 
-      grouped: (state): { [key: string]: IProduct[] } => {
+      grouped: (state): TGrouped => {
         const grouped: TGrouped = groupBy(
           state.items,
           (item: IProduct) => item.name,
@@ -86,7 +86,7 @@ export const useCartStore = defineStore<'CartStore', IState, Getters, Actions>(
       // the bellow does not work TypeScript. Also, arrow func done not handle `this`.
       groupCount:
         (state) =>
-        (name: string): number =>
+        (name): number =>
           state.grouped[name].length,
       // ??
       // Try3 no
