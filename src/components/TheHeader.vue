@@ -14,7 +14,7 @@ export default {
 </script>
 
 <!-- with setup: Composition API -->
-<!-- <script setup>
+<!-- <script setup lang="ts">
 // imports
 import CartWidget from './CartWidget.vue';
 </script> -->
