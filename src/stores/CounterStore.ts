@@ -34,7 +34,7 @@ import { ref } from 'vue';
 // });
 
 // Setup store expression: Composition API's style
-// this type is not necessary type definition.
+// this type is NOT necessary type definition.
 // ref()s become state properties
 // computed()s become getters
 // function()s become actions
