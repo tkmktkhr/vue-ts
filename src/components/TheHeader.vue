@@ -1,5 +1,5 @@
 <!-- Options API -->
-<script>
+<script setup lang="ts">
 // imports
 import { useAuthUserStore } from '@/stores/AuthUserStore';
 import { mapState } from 'pinia';
