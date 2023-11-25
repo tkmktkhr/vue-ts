@@ -27,7 +27,7 @@ const fetchDataFromFB = async () => {
 
   const querySnapshot = await getDocs(collection(db, 'products'));
   querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data()}`);
+    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
     console.dir(doc.data());
   });
 };
