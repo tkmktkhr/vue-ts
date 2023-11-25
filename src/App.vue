@@ -5,7 +5,7 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
-import { collection, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { useCollection, useFirestore } from 'vuefire';
 
 const db = useFirestore();
@@ -23,12 +23,22 @@ console.log('loaded products ...');
 // const settings = useDocument(doc(db, 'settings', 'some_id'))
 
 const fetchDataFromFB = async () => {
-  console.log('clicked');
+  console.log('fetching...');
 
   const querySnapshot = await getDocs(collection(db, 'products'));
   querySnapshot.forEach((doc) => {
     console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
     console.dir(doc.data());
+  });
+};
+
+const saveDataToFB = async () => {
+  console.log('saving');
+
+  // add id by yourself
+  await setDoc(doc(db, 'products', 'PA'), {
+    name: 'Pineapple',
+    price: 5,
   });
 };
 
@@ -93,6 +103,7 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
   />
   <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
   {{ productsDb }}
+  <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
   <!-- <ul>
     <li v-for="p in productsDb" :key="p.name">
       <span>{{ p.name }}: ${{ p.price }}</span>
