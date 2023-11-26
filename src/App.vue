@@ -36,10 +36,17 @@ const saveDataToFB = async () => {
   console.log('saving');
 
   // add id by yourself
-  await setDoc(doc(db, 'products', 'PA'), {
+  // await setDoc(doc(db, 'products', 'PA'), {
+  //   name: 'Pineapple',
+  //   price: 5,
+  // });
+
+  // Add a new document with a generated id.
+  const docRef = await addDoc(collection(db, 'products'), {
     name: 'Pineapple',
     price: 5,
   });
+  console.log(docRef);
 };
 
 // can not call actions
