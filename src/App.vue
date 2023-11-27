@@ -22,32 +22,35 @@ console.log('loaded products ...');
 // import { doc } from 'firebase/firestore'
 // const settings = useDocument(doc(db, 'settings', 'some_id'))
 
-const fetchDataFromFB = async () => {
-  console.log('fetching...');
+// Transfer to ProductsList.vue from here
+// const fetchDataFromFB = async () => {
+//   console.log('fetching...');
 
-  const querySnapshot = await getDocs(collection(db, 'products'));
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-    console.dir(doc.data());
-  });
-};
+//   const querySnapshot = await getDocs(collection(db, 'products'));
+//   querySnapshot.forEach((doc) => {
+//     console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+//     console.dir(doc.data());
+//   });
+// };
 
-const saveDataToFB = async () => {
-  console.log('saving');
+// const saveDataToFB = async () => {
+// console.log('saving');
 
-  // add id by yourself
-  // await setDoc(doc(db, 'products', 'PA'), {
-  //   name: 'Pineapple',
-  //   price: 5,
-  // });
+// This is another expression
+// add id by yourself
+// await setDoc(doc(db, 'products', 'PA'), {
+//   name: 'Pineapple',
+//   price: 5,
+// });
 
-  // Add a new document with a generated id.
-  const docRef = await addDoc(collection(db, 'products'), {
-    name: 'Pineapple',
-    price: 5,
-  });
-  console.log(docRef);
-};
+// Add a new document with a generated id.
+//   const docRef = await addDoc(collection(db, 'products'), {
+//     name: 'Pineapple',
+//     price: 5,
+//   });
+//   console.log(docRef);
+// };
+// Transfer to ProductsList.vue until here
 
 // can not call actions
 // import { storeToRefs } from 'pinia';
