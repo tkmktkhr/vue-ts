@@ -1,0 +1,36 @@
+<script setup lang="ts">
+const fetchDataFromFB = async () => {
+  console.log('fetching...');
+
+  const querySnapshot = await getDocs(collection(db, 'products'));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+    console.dir(doc.data());
+  });
+};
+
+const saveDataToFB = async () => {
+  console.log('saving');
+
+  // add id by yourself
+  // await setDoc(doc(db, 'products', 'PA'), {
+  //   name: 'Pineapple',
+  //   price: 5,
+  // });
+
+  // Add a new document with a generated id.
+  const docRef = await addDoc(collection(db, 'products'), {
+    name: 'Pineapple',
+    price: 5,
+  });
+  console.log(docRef);
+};
+</script>
+
+<template>
+  <div>
+    <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
+    {{ productsDb }}
+    <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
+  </div>
+</template>
