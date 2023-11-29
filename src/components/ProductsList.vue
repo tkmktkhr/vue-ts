@@ -1,4 +1,16 @@
 <script setup lang="ts">
+import { addDoc, collection, getDocs } from '@firebase/firestore';
+import { useCollection, useFirestore } from 'vuefire';
+
+const db = useFirestore();
+
+// collection
+console.log('loading products ...');
+const productsRef = collection(db, 'products');
+const productsDb = useCollection(productsRef);
+console.log({ value: productsDb });
+console.log('loaded products ...');
+
 const fetchDataFromFB = async () => {
   console.log('fetching...');
 
