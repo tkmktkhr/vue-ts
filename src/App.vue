@@ -5,52 +5,12 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
-import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
-import { useCollection, useFirestore } from 'vuefire';
-
-const db = useFirestore();
-
-// collection
-console.log('loading products ...');
-const productsRef = collection(db, 'products');
-const productsDb = useCollection(productsRef);
-console.log({ value: productsDb });
-console.log('loaded products ...');
+import ProductsList from './components/ProductsList.vue';
 
 // document
 // import { useDocument } from 'vuefire'
 // import { doc } from 'firebase/firestore'
 // const settings = useDocument(doc(db, 'settings', 'some_id'))
-
-// Transfer to ProductsList.vue from here
-// const fetchDataFromFB = async () => {
-//   console.log('fetching...');
-
-//   const querySnapshot = await getDocs(collection(db, 'products'));
-//   querySnapshot.forEach((doc) => {
-//     console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-//     console.dir(doc.data());
-//   });
-// };
-
-// const saveDataToFB = async () => {
-// console.log('saving');
-
-// This is another expression
-// add id by yourself
-// await setDoc(doc(db, 'products', 'PA'), {
-//   name: 'Pineapple',
-//   price: 5,
-// });
-
-// Add a new document with a generated id.
-//   const docRef = await addDoc(collection(db, 'products'), {
-//     name: 'Pineapple',
-//     price: 5,
-//   });
-//   console.log(docRef);
-// };
-// Transfer to ProductsList.vue until here
 
 // can not call actions
 // import { storeToRefs } from 'pinia';
@@ -111,9 +71,7 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
     :num="0"
     :products="productStore.products"
   />
-  <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
-  {{ productsDb }}
-  <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
+  <ProductsList />
   <!-- <ul>
     <li v-for="p in productsDb" :key="p.name">
       <span>{{ p.name }}: ${{ p.price }}</span>
