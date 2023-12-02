@@ -50,6 +50,7 @@ const inputValueCheck = (event: any): string => {
   return value;
 };
 const updateValue = (value: string) => {
+  console.log({ inputUpdated: value });
   emit('update:modelValue', value);
 };
 </script>
@@ -62,6 +63,7 @@ const updateValue = (value: string) => {
       :value="modelValue"
       type="string"
       @input="updateValue(inputValueCheck($event))"
+      ref="newProductNameInput"
     />
     modelValue: {{ modelValue }}
     <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
