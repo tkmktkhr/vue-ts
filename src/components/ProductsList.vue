@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { addDoc, collection, getDocs } from '@firebase/firestore';
 import { useCollection, useFirestore } from 'vuefire';
+import { ref } from 'vue';
 
 const db = useFirestore();
 
@@ -37,12 +38,32 @@ const saveDataToFB = async () => {
   });
   console.log(docRef);
 };
+
+// product input
+const modelValue = ref('');
+const emit = defineEmits(['update:modelValue', 'input']);
+
+const inputValueCheck = (event: any): string => {
+  if (!(event.target instanceof HTMLInputElement)) return '';
+  const value = event.target.value;
+  console.log({ productInput: value });
+  return value;
+};
+const updateValue = (value: string) => {
+  emit('update:modelValue', value);
+};
 </script>
 
 <template>
   <div>
     <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
     {{ productsDb }}
+    <input
+      :value="modelValue"
+      type="string"
+      @input="updateValue(inputValueCheck($event))"
+    />
+    modelValue: {{ modelValue }}
     <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
   </div>
 </template>

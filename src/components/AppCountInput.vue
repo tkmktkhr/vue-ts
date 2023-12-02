@@ -19,6 +19,7 @@ const inputValueCheck = (event: any): number => {
   return value === '' ? 0 : parseInt(value);
 };
 </script>
+
 <template>
   <span>
     <button
