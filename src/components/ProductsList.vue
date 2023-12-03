@@ -40,8 +40,8 @@ const saveDataToFB = async () => {
 };
 
 // product input
-const modelValue = ref('');
-const emit = defineEmits(['update:modelValue', 'input']);
+const productName = ref('');
+const emit = defineEmits(['update:productName', 'input']);
 
 const inputValueCheck = (event: any): string => {
   if (!(event.target instanceof HTMLInputElement)) return '';
@@ -51,7 +51,7 @@ const inputValueCheck = (event: any): string => {
 };
 const updateValue = (value: string) => {
   console.log({ inputUpdated: value });
-  emit('update:modelValue', value);
+  emit('update:productName', value);
 };
 </script>
 
@@ -60,12 +60,17 @@ const updateValue = (value: string) => {
     <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
     {{ productsDb }}
     <input
-      :value="modelValue"
+      :value="productName"
       type="string"
       @input="updateValue(inputValueCheck($event))"
-      ref="newProductNameInput"
     />
-    modelValue: {{ modelValue }}
+    <!-- <input
+      :value="productName"
+      type="string"
+      @input="updateValue(inputValueCheck($event))"
+      ref="productName" // if use ref.
+    /> -->
+    <div>productName: {{ productName }}</div>
     <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
   </div>
 </template>
