@@ -22,6 +22,7 @@ const fetchDataFromFB = async () => {
   });
 };
 
+// const saveDataToFB = async (name: string, price: number) => {
 const saveDataToFB = async () => {
   console.log('saving');
 
@@ -33,24 +34,28 @@ const saveDataToFB = async () => {
 
   // Add a new document with a generated id.
   const docRef = await addDoc(collection(db, 'products'), {
-    name: 'Pineapple',
-    price: 5,
+    name: 'test',
+    price: 1,
+    // name,
+    // price,
   });
   console.log(docRef);
 };
 
 // product input
 const productName = ref('');
+// const productPrice = ref(0);
 const emit = defineEmits(['update:productName', 'input']);
+// const emit = defineEmits(['update:productName', 'input']);
 
+// REFACTOR move it to util function
 const inputValueCheck = (event: any): string => {
   if (!(event.target instanceof HTMLInputElement)) return '';
   const value = event.target.value;
-  console.log({ productInput: value });
+  productName.value = value;
   return value;
 };
 const updateValue = (value: string) => {
-  console.log({ inputUpdated: value });
   emit('update:productName', value);
 };
 </script>
