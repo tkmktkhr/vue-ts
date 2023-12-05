@@ -22,8 +22,7 @@ const fetchDataFromFB = async () => {
   });
 };
 
-// const saveDataToFB = async (name: string, price: number) => {
-const saveDataToFB = async () => {
+const saveDataToFB = async (name: string, price: number) => {
   console.log('saving');
 
   // add id by yourself
@@ -34,29 +33,41 @@ const saveDataToFB = async () => {
 
   // Add a new document with a generated id.
   const docRef = await addDoc(collection(db, 'products'), {
-    name: 'test',
-    price: 1,
-    // name,
-    // price,
+    name,
+    price,
   });
   console.log(docRef);
 };
 
 // product input
 const productName = ref('');
-// const productPrice = ref(0);
-const emit = defineEmits(['update:productName', 'input']);
-// const emit = defineEmits(['update:productName', 'input']);
+const productPrice = ref(0);
+// const emit = defineEmits<{
+//   (e: 'change', id: number): void
+//   (e: 'update', value: string): void
+// }>()
+const emit1 = defineEmits(['update:productName', 'input']);
+const emit2 = defineEmits(['update:productPrice', 'input']);
 
 // REFACTOR move it to util function
-const inputValueCheck = (event: any): string => {
+const inputValueCheckString = (event: any): string => {
   if (!(event.target instanceof HTMLInputElement)) return '';
   const value = event.target.value;
   productName.value = value;
   return value;
 };
-const updateValue = (value: string) => {
-  emit('update:productName', value);
+const updateValueString = (value: string) => {
+  emit1('update:productName', value);
+};
+const inputValueCheckNumber = (event: any): number => {
+  if (!(event.target instanceof HTMLInputElement)) return 0;
+  const value = event.target.value;
+  productPrice.value = value;
+  // convert to number?
+  return value;
+};
+const updateValueNumber = (value: number) => {
+  emit2('update:productPrice', value);
 };
 </script>
 
@@ -67,7 +78,13 @@ const updateValue = (value: string) => {
     <input
       :value="productName"
       type="string"
-      @input="updateValue(inputValueCheck($event))"
+      @input="updateValueString(inputValueCheckString($event))"
+    />
+    <input
+      :value="productName"
+      type="number"
+      min="0"
+      @input="updateValueNumber(inputValueCheckNumber($event))"
     />
     <!-- <input
       :value="productName"
@@ -76,6 +93,8 @@ const updateValue = (value: string) => {
       ref="productName" // if use ref.
     /> -->
     <div>productName: {{ productName }}</div>
-    <button @click="saveDataToFB">POST DATA INTO FIRESTORE</button>
+    <button @click="saveDataToFB(productName, productPrice)">
+      POST DATA INTO FIRESTORE
+    </button>
   </div>
 </template>
