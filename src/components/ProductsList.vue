@@ -42,12 +42,12 @@ const saveDataToFB = async (name: string, price: number) => {
 // product input
 const productName = ref('');
 const productPrice = ref(0);
-// const emit = defineEmits<{
-//   (e: 'change', id: number): void
-//   (e: 'update', value: string): void
-// }>()
-const emit1 = defineEmits(['update:productName', 'input']);
-const emit2 = defineEmits(['update:productPrice', 'input']);
+const emit = defineEmits<{
+  (e: 'change', id: number): void;
+  (e: 'update', value: string): void;
+}>();
+// const emit1 = defineEmits(['update:productName', 'input']);
+// const emit2 = defineEmits(['update:productPrice', 'input']);
 
 // REFACTOR move it to util function
 const inputValueCheckString = (event: any): string => {
