@@ -43,8 +43,8 @@ const saveDataToFB = async (name: string, price: number) => {
 const productName = ref('');
 const productPrice = ref(0);
 const emit = defineEmits<{
-  (e: 'change', id: number): void;
-  (e: 'update', value: string): void;
+  (e: 'update:productName', id: number): void;
+  (e: 'update:productPrice', value: string): void;
 }>();
 // const emit1 = defineEmits(['update:productName', 'input']);
 // const emit2 = defineEmits(['update:productPrice', 'input']);
@@ -57,7 +57,7 @@ const inputValueCheckString = (event: any): string => {
   return value;
 };
 const updateValueString = (value: string) => {
-  emit1('update:productName', value);
+  emit('update:productName', value);
 };
 const inputValueCheckNumber = (event: any): number => {
   if (!(event.target instanceof HTMLInputElement)) return 0;
@@ -67,7 +67,7 @@ const inputValueCheckNumber = (event: any): number => {
   return value;
 };
 const updateValueNumber = (value: number) => {
-  emit2('update:productPrice', value);
+  emit('update:productPrice', value);
 };
 </script>
 
