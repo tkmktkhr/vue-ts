@@ -73,24 +73,30 @@ const updateValueNumber = (value: number) => {
   <div>
     <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
     {{ productsDb }}
-    <input
-      :value="productName"
-      type="string"
-      @input="updateValueString(inputValueCheckString($event))"
-    />
-    <input
-      :value="productName"
-      type="number"
-      min="0"
-      @input="updateValueNumber(inputValueCheckNumber($event))"
-    />
+    <div>
+      <input
+        :value="productName"
+        type="string"
+        @input="updateValueString(inputValueCheckString($event))"
+      />
+    </div>
+    <div>productName: {{ productName }}</div>
+
+    <div>
+      <input
+        :value="productName"
+        type="number"
+        min="0"
+        @input="updateValueNumber(inputValueCheckNumber($event))"
+      />
+    </div>
+    <div>productName: {{ productPrice }}</div>
     <!-- <input
       :value="productName"
       type="string"
       @input="updateValue(inputValueCheck($event))"
       ref="productName" // if use ref.
     /> -->
-    <div>productName: {{ productName }}</div>
     <button @click="saveDataToFB(productName, productPrice)">
       POST DATA INTO FIRESTORE
     </button>
