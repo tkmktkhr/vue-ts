@@ -57,9 +57,16 @@ const inputValueCheckString = (event: any): string => {
 const updateValueString = (value: string) => {
   emit('update:productName', value);
 };
-const inputValueCheckNumber = (event: any): number => {
-  if (!(event.target instanceof HTMLInputElement)) return 0;
+const inputValueCheckNumber = (event: any): number | null => {
+  if (!(event.target instanceof HTMLInputElement)) {
+    productPrice.value = 0;
+    return null;
+  }
   const value = event.target.value;
+  if (isNaN(value)) {
+    productPrice.value = 0;
+    return null;
+  }
   productPrice.value = value;
   // convert to number?
   return value;
@@ -84,13 +91,13 @@ const updateValueNumber = (value: number) => {
 
     <div>
       <input
-        :value="productName"
+        :value="productPrice"
         type="number"
         min="0"
         @input="updateValueNumber(inputValueCheckNumber($event))"
       />
     </div>
-    <div>productName: {{ productPrice }}</div>
+    <div>productPrice: {{ productPrice }}</div>
     <!-- <input
       :value="productName"
       type="string"
