@@ -57,15 +57,15 @@ const inputValueCheckString = (event: any): string => {
 const updateValueString = (value: string) => {
   emit('update:productName', value);
 };
-const inputValueCheckNumber = (event: any): number | null => {
+const inputValueCheckNumber = (event: any): number => {
   if (!(event.target instanceof HTMLInputElement)) {
     productPrice.value = 0;
-    return null;
+    return 0;
   }
   const value = event.target.value;
   if (isNaN(value)) {
     productPrice.value = 0;
-    return null;
+    return 0;
   }
   productPrice.value = value;
   // convert to number?
