@@ -42,9 +42,13 @@ const saveDataToFB = async (name: string, price: number) => {
 // product input
 const productName = ref('');
 const productPrice = ref(0);
+// const emit = defineEmits<{
+//   (e: 'update:productName', value: string): void;
+//   (e: 'update:productPrice', value: number): void;
+// }>();
 const emit = defineEmits<{
-  (e: 'update:productName', value: string): void;
-  (e: 'update:productPrice', value: number): void;
+  updateProductName: [name: string];
+  updateProductPrice: [price: number];
 }>();
 
 // REFACTOR move it to util function
@@ -54,8 +58,8 @@ const inputValueCheckString = (event: any): string => {
   productName.value = value;
   return value;
 };
-const updateValueString = (value: string) => {
-  emit('update:productName', value);
+const updateValueString = (name: string) => {
+  emit('updateProductName', name);
 };
 const inputValueCheckNumber = (event: any): number => {
   if (!(event.target instanceof HTMLInputElement)) {
@@ -71,8 +75,8 @@ const inputValueCheckNumber = (event: any): number => {
   // convert to number?
   return value;
 };
-const updateValueNumber = (value: number) => {
-  emit('update:productPrice', value);
+const updateValueNumber = (price: number) => {
+  emit('updateProductPrice', price);
 };
 </script>
 
