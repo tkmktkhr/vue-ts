@@ -44,6 +44,9 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
 const log = () => {
   console.log('---');
 };
+const log2 = () => {
+  console.log('===');
+};
 </script>
 
 <template>
@@ -74,7 +77,7 @@ const log = () => {
     :num="0"
     :products="productStore.products"
   />
-  <ProductsList @updateProductName="log" />
+  <ProductsList @updateProductName="log" @updateProductPrice="log2" />
   <!-- <ul>
     <li v-for="p in productsDb" :key="p.name">
       <span>{{ p.name }}: ${{ p.price }}</span>
