@@ -13,6 +13,11 @@ import { PiniaHistoryPlugin } from '@/plugins/PiniaHistoryPlugin';
 // import { getFirestore } from 'firebase/firestore';
 import { createDb } from './db';
 import { VueFire, VueFireAuth } from 'vuefire';
+// vuetify
+import 'vuetify/styles';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
 const app = createApp(App);
 
@@ -22,6 +27,11 @@ pinia.use(PiniaHistoryPlugin);
 
 const firebase = createDb();
 // export const db = getFirestore(firebase);
+
+const vuetify = createVuetify({
+  components,
+  directives,
+});
 
 app
   .use(pinia)
@@ -34,6 +44,7 @@ app
       VueFireAuth(),
     ],
   })
+  .use(vuetify)
   .component('AppButton', AppButton)
   .component('AppCountInput', AppCountInput)
   .component('AppModalOverlay', AppModalOverlay)
