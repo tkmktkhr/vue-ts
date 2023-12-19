@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import routes from '~pages';
 import './assets/main.pcss';
 import '@/style.css';
 import App from '@/App.vue';
@@ -18,6 +19,8 @@ import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
+// vue-router
+import VueRouter from 'vue-router';
 
 const app = createApp(App);
 
@@ -33,6 +36,12 @@ const vuetify = createVuetify({
   directives,
 });
 
+const router = VueRouter.createRouter({
+  // Provide the history implementation to use. Vue router is using the hash history for simplicity here.
+  history: VueRouter.createWebHashHistory(),
+  routes,
+});
+
 app
   .use(pinia)
   .use(FontAwesomePlugin)
@@ -45,6 +54,7 @@ app
     ],
   })
   .use(vuetify)
+  .use(router)
   .component('AppButton', AppButton)
   .component('AppCountInput', AppCountInput)
   .component('AppModalOverlay', AppModalOverlay)
