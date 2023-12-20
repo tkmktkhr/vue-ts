@@ -72,7 +72,6 @@ const inputValueCheckNumber = (event: any): number => {
     return 0;
   }
   productPrice.value = value;
-  // convert to number?
   return value;
 };
 const updateValueNumber = (price: number) => {
