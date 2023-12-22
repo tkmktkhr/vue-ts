@@ -42,10 +42,6 @@ const saveDataToFB = async (name: string, price: number) => {
 // product input
 const productName = ref('');
 const productPrice = ref(0);
-// const emit = defineEmits<{
-//   (e: 'update:productName', value: string): void;
-//   (e: 'update:productPrice', value: number): void;
-// }>();
 const emit = defineEmits<{
   updateProductName: [name: string];
   updateProductPrice: [price: number];
