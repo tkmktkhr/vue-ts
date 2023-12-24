@@ -6,11 +6,9 @@ import { ref } from 'vue';
 const db = useFirestore();
 
 // collection
-console.log('loading products ...');
 const productsRef = collection(db, 'products');
 const productsDb = useCollection(productsRef);
 console.log({ value: productsDb });
-console.log('loaded products ...');
 
 const fetchDataFromFB = async () => {
   console.log('fetching...');
