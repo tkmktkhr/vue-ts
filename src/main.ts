@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 // REFACTOR change to import vue-router correctly
-import routes from '~pages';
+import { routes } from '@/routes';
+// import routes from '~pages';
 import './assets/main.pcss';
 import '@/style.css';
 import App from '@/App.vue';
