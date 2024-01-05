@@ -5,7 +5,6 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from './components/AppButton.vue';
-import ProductsList from './components/ProductsList.vue';
 
 // document
 // import { useDocument } from 'vuefire'
@@ -41,12 +40,6 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
 //     }
 //   });
 // };
-const log = () => {
-  console.log('---');
-};
-const log2 = () => {
-  console.log('===');
-};
 </script>
 
 <template>
@@ -77,7 +70,6 @@ const log2 = () => {
     :num="0"
     :products="productStore.products"
   />
-  <ProductsList @updateProductName="log" @updateProductPrice="log2" />
   <!-- <ul>
     <li v-for="p in productsDb" :key="p.name">
       <span>{{ p.name }}: ${{ p.price }}</span>
