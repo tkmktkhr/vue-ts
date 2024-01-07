@@ -43,6 +43,9 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
 </script>
 
 <template>
+  <!-- <VAppNavigation />
+  <RouterView />
+  <AppFooter /> -->
   <div class="container">
     <TheHeader />
     <div class="mb-5 flex justify-end"></div>
