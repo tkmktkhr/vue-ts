@@ -27,7 +27,7 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
       console.log(args[0]); // -> count: number
     });
     onError((error) => {
-      console.log('Error________', error.message);
+      console.log('Error________', error);
     });
   }
 });
