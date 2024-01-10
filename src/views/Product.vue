@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import ProductsList from '@/components/ProductsList.vue';
 
-const nameUpdateLog = () => {
+const nameUpdateLog = (n: string) => {
+  console.log(n);
   console.log('name was updated.');
 };
 const priceUpdateLog = () => {
