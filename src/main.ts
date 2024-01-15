@@ -22,7 +22,7 @@ import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 // vue-router
-import VueRouter, { createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const app = createApp(App);
 
@@ -38,7 +38,7 @@ const vuetify = createVuetify({
   directives,
 });
 
-const router = VueRouter.createRouter({
+const router = createRouter({
   // Provide the history implementation to use. Vue router is using the hash history for simplicity here.
   history: createWebHistory(),
   routes,
