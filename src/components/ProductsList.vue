@@ -104,5 +104,6 @@ const updateValueNumber = (price: number) => {
     <button @click="saveDataToFB(productName, productPrice)">
       POST DATA INTO FIRESTORE
     </button>
+    <VTextField label="name" />
   </div>
 </template>
