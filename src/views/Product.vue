@@ -6,6 +6,8 @@ import { useCollection, useDocument, useFirestore } from 'vuefire';
 const db = useFirestore()
 const product = useDocument(() => doc(db, `products`, 'PA'))
 const productCollection = useCollection(() => collection(db, `products`))
+console.log(product)
+console.log(productCollection)
 
 const nameUpdateLog = (n: string) => {
   console.log(n);
@@ -18,7 +20,8 @@ const priceUpdateLog = () => {
 
 <template>
   <div>
-    <ProductsList @updateProductName="nameUpdateLog" @updateProductPrice="priceUpdateLog" />
+    <ProductsList :product="product" :productCollection="productCollection" @updateProductName="nameUpdateLog"
+      @updateProductPrice="priceUpdateLog" />
     <div>==========================</div>
     <div> {{ product }}</div>
     <div> {{ productCollection }}</div>

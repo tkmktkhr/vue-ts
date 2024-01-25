@@ -3,6 +3,25 @@ import { addDoc, collection, getDocs } from '@firebase/firestore';
 import { useCollection, useFirestore } from 'vuefire';
 import { ref } from 'vue';
 
+interface Product {
+  name: string | null,
+  price: number | null
+}
+
+interface Props {
+  product: Product | null,
+  productCollection: Product[] | null
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  product: null,
+  productCollection: null
+})
+
+console.log(props)
+console.log(props.product)
+console.log(props.productCollection)
+
 const db = useFirestore();
 
 // collection
@@ -78,21 +97,12 @@ const updateValueNumber = (price: number) => {
     <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
     {{ productsDb }}
     <div>
-      <input
-        :value="productName"
-        type="string"
-        @input="updateValueString(inputValueCheckString($event))"
-      />
+      <input :value="productName" type="string" @input="updateValueString(inputValueCheckString($event))" />
     </div>
     <div>productName: {{ productName }}</div>
 
     <div>
-      <input
-        :value="productPrice"
-        type="number"
-        min="0"
-        @input="updateValueNumber(inputValueCheckNumber($event))"
-      />
+      <input :value="productPrice" type="number" min="0" @input="updateValueNumber(inputValueCheckNumber($event))" />
     </div>
     <div>productPrice: {{ productPrice }}</div>
     <!-- <input
@@ -105,5 +115,6 @@ const updateValueNumber = (price: number) => {
       POST DATA INTO FIRESTORE
     </button>
     <VTextField label="name" />
+    <div>{{ props }}</div>
   </div>
 </template>
