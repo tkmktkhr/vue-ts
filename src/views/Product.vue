@@ -42,7 +42,7 @@ const priceUpdateLog = () => {
   <div>
     <ProductId :product="product" :productCollection="productCollection" />
     <br />
-    <VList>
+    <VList lines="two">
       <VListItem
         v-for="p in products"
         :key="p.id"
@@ -51,7 +51,10 @@ const priceUpdateLog = () => {
         color="primary"
       >
         <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
-        <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
+        <VListItemSubtitle>
+          price: {{ p.price }}
+          <VBtn :to="`products/${p.id}`"> see detail </VBtn>
+        </VListItemSubtitle>
       </VListItem>
     </VList>
     <br />
