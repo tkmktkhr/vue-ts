@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { addDoc, collection, getDocs, doc } from '@firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, doc } from '@firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
 import { ref } from 'vue';
+import { onMounted } from 'vue';
 
 interface Product {
   name: string | null,
@@ -20,24 +21,38 @@ const props = withDefaults(defineProps<Props>(), {
 
 // props is `null` when first init rendering.
 console.log('list inside ----------------')
-console.log(props)
-console.log(props.product)
+console.log(props) // Proxy with data but data can not be taken on setup.
+console.log(props.product) // null
 console.log(props.product?.name) // undefined
-console.log(props.productCollection)
+console.log(props.productCollection) // Empty Array
 
-const name = ref(props.product?.name)
-console.log(name)
-console.log(name.value) // Empty Array
+// const name = ref(props.product?.name)
+// console.log(name) // RefImpl data is null
+// console.log(name.value) // Empty Array
 console.log('list inside ---------------- here end')
 
+const name = ref<string | null>(null)
+onMounted(async () => {
+  try {
+    const docRef = doc(db, `products`, 'PA')
+    const docSnapData = (await getDoc(docRef)).data()
+    console.log({ onMoutedSnap: docSnapData })
+    if (!docSnapData) throw new Error(`no data: ${docSnapData}`)
+    name.value = docSnapData['name']
+  } catch (error) {
+    throw new Error(`${JSON.stringify(error)}`)
+  }
+})
 
 const db = useFirestore();
 
 // document
-const productPA = useDocument(doc(db, `products`, 'PA'))
+const productPA = useDocument<Product>(doc(db, `products`, 'PA')).data
 console.log({ productPA });
-console.log({ productPAVal: productPA.value });
-// const pname = ref(productPA.data.value.name)
+console.log({ productPAVal: productPA.value }); // undefined
+// const pname = ref(productPA.value?.name) // not  work as an init value
+const pname = ref<string | null>(null)
+console.log({ pname })
 // collection
 const productsRef = collection(db, 'products');
 const productsDb = useCollection(productsRef);
@@ -129,7 +144,12 @@ const updateValueNumber = (price: number) => {
     <button @click="saveDataToFB(productName, productPrice)">
       POST DATA INTO FIRESTORE
     </button>
-    <VTextField v-model="productPA?.['name']" label="name" />
-    <div>{{ props }}</div>
+    <VTextField v-model="pname" label="Pname" />
+    <VTextField v-model="name" label="name" />
+    <div>{{ props.product?.name }}</div>
+    <br />
+    <div>{{ props.product?.price }}</div>
+    <br />
+    <div>{{ props.productCollection }}</div>
   </div>
 </template>
