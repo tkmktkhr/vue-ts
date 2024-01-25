@@ -1,14 +1,33 @@
 <script setup lang="ts">
-import ProductsList from '@/components/ProductsList.vue';
+import ProductId from '@/views/ProductId.vue';
 import ProductsListSample from '@/components/ProductsListSample.vue';
-import { collection, doc } from 'firebase/firestore';
+import { collection, doc, getDocs } from 'firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
+import { ref, onMounted } from 'vue';
+import { Product } from '@/domains/product';
+import {
+  VList,
+  VListItem,
+  VListItemSubtitle,
+  VListItemTitle,
+} from 'vuetify/components';
 
 const db = useFirestore();
 const product = useDocument(() => doc(db, `products`, 'PA'));
 const productCollection = useCollection(() => collection(db, `products`));
 console.log(product);
 console.log(productCollection);
+
+const products = ref<Product[]>([]);
+
+onMounted(async () => {
+  const querySnapshot = await getDocs(collection(db, 'products'));
+  const res = querySnapshot.docs.map((doc) => {
+    return { ...doc.data(), ...{ id: doc.id } };
+  });
+  console.log({ res });
+  products.value = res;
+});
 
 const nameUpdateLog = (n: string) => {
   console.log(n);
@@ -21,13 +40,20 @@ const priceUpdateLog = () => {
 
 <template>
   <div>
-    <ProductsList
-      :product="product"
-      :productCollection="productCollection"
-      @updateProductName="nameUpdateLog"
-      @updateProductPrice="priceUpdateLog"
-    />
+    <ProductId :product="product" :productCollection="productCollection" />
     <br />
+    <VList>
+      <VListItem
+        v-for="p in products"
+        :key="p.id"
+        ripple
+        :value="p"
+        color="primary"
+      >
+        <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
+        <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
+      </VListItem>
+    </VList>
     <br />
     <div>=========== bellow ProductsList Sample vue ===============</div>
     <ProductsListSample

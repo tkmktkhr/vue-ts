@@ -9,11 +9,7 @@ import {
 } from '@firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
 import { onMounted, ref, watch } from 'vue';
-
-interface Product {
-  name: string | null;
-  price: number | null;
-}
+import { Product } from '@/domains/product';
 
 interface Props {
   product: Product | null;
