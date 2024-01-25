@@ -29,9 +29,10 @@ console.log({ productPAVal: productOnDB.value }); // undefined
 
 watch(productOnDB, () => {
   name.value = productOnDB.value?.name;
+  price.value = productOnDB.value?.price;
+  isStock.value = productOnDB.value?.isStock;
   console.log('watch');
   console.log(productOnDB.value?.name);
-  // price.value = pr
 });
 
 // interface Props {
@@ -101,6 +102,8 @@ const saveDataToFB = async (name: string, price: number) => {
 
 <template>
   <div>
+    <div>{{ urlId }}</div>
+    <br />
     <VTextField v-model="name" label="Product Name" />
     <VTextField v-model="price" type="number" label="Product Price" />
     <VSwitch v-model="isStock" :label="`isStock: ${isStock}`" />

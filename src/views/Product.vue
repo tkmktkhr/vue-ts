@@ -42,6 +42,7 @@ const priceUpdateLog = () => {
   <div>
     <!-- <ProductId :product="product" :productCollection="productCollection" /> -->
     <br />
+    <div>-------------------- list --------------------</div>
     <VList lines="two">
       <VListItem
         v-for="p in products"
