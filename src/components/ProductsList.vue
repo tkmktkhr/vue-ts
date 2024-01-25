@@ -1,62 +1,65 @@
 <script setup lang="ts">
-import { addDoc, collection, getDoc, getDocs, doc, updateDoc } from '@firebase/firestore';
+import {
+  addDoc,
+  collection,
+  getDoc,
+  getDocs,
+  doc,
+  updateDoc,
+} from '@firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
 import { onMounted, ref, watch } from 'vue';
-
-interface Product {
-  name: string | null,
-  price: number | null
-}
+import { Product } from '@/domains/product';
 
 interface Props {
-  product: Product | null,
-  productCollection: Product[] | null
+  product: Product | null;
+  productCollection: Product[] | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   product: null,
-  productCollection: null
-})
+  productCollection: null,
+});
 
 // props is `null` when first init rendering.
-console.log('list inside ----------------')
-console.log(props) // Proxy with data but data can not be taken on setup.
-console.log(props.product) // null
-console.log(props.product?.name) // undefined
-console.log(props.productCollection) // Empty Array
+console.log('list inside ----------------');
+console.log(props); // Proxy with data but data can not be taken on setup.
+console.log(props.product); // null
+console.log(props.product?.name); // undefined
+console.log(props.productCollection); // Empty Array
 
 // const name = ref(props.product?.name)
 // console.log(name) // RefImpl data is null
 // console.log(name.value) // Empty Array
-console.log('list inside ---------------- here end')
+console.log('list inside ---------------- here end');
 
-const name = ref<string | null>(null)
+const name = ref<string | null>(null);
 onMounted(async () => {
   try {
-    const docRef = doc(db, `products`, 'PA')
-    const docSnapData = (await getDoc(docRef)).data()
-    console.log({ onMoutedSnap: docSnapData })
-    if (!docSnapData) throw new Error(`no data: ${docSnapData}`)
-    name.value = docSnapData['name']
+    const docRef = doc(db, `products`, 'PA');
+    const docSnapData = (await getDoc(docRef)).data();
+    console.log({ onMoutedSnap: docSnapData });
+    if (!docSnapData) throw new Error(`no data: ${docSnapData}`);
+    name.value = docSnapData['name'];
   } catch (error) {
-    throw new Error(`${JSON.stringify(error)}`)
+    throw new Error(`${JSON.stringify(error)}`);
   }
-})
+});
 
 watch(name, async () => {
-  const updateData = { name: name.value }
-  await updateDoc(doc(db, 'products', 'PA'), updateData)
-})
+  const updateData = { name: name.value };
+  await updateDoc(doc(db, 'products', 'PA'), updateData);
+});
 
 const db = useFirestore();
 
 // document
-const productPA = useDocument<Product>(doc(db, `products`, 'PA')).data
+const productPA = useDocument<Product>(doc(db, `products`, 'PA')).data;
 console.log({ productPA });
 console.log({ productPAVal: productPA.value }); // undefined
 // const pname = ref(productPA.value?.name) // not  work as an init value
-const pname = ref<string | null>(null)
-console.log({ pname })
+const pname = ref<string | null>(null);
+console.log({ pname });
 // collection
 const productsRef = collection(db, 'products');
 const productsDb = useCollection(productsRef);
@@ -131,12 +134,21 @@ const updateValueNumber = (price: number) => {
     <button @click="fetchDataFromFB">GET DATA FROM FIRESTORE</button>
     {{ productsDb }}
     <div>
-      <input :value="productName" type="string" @input="updateValueString(inputValueCheckString($event))" />
+      <input
+        :value="productName"
+        type="string"
+        @input="updateValueString(inputValueCheckString($event))"
+      />
     </div>
     <div>productName: {{ productName }}</div>
 
     <div>
-      <input :value="productPrice" type="number" min="0" @input="updateValueNumber(inputValueCheckNumber($event))" />
+      <input
+        :value="productPrice"
+        type="number"
+        min="0"
+        @input="updateValueNumber(inputValueCheckNumber($event))"
+      />
     </div>
     <div>productPrice: {{ productPrice }}</div>
     <!-- <input
