@@ -21,12 +21,18 @@ if (!urlId || Array.isArray(urlId)) {
   console.error(`id: ${urlId} does not exist.`);
   throw new Error();
 }
-console.log(urlId);
 
 // document for data sync
 const productOnDB = useDocument<Product>(doc(db, `products`, urlId)).data;
 console.log({ productOnDB });
 console.log({ productPAVal: productOnDB.value }); // undefined
+
+watch(productOnDB, () => {
+  name.value = productOnDB.value?.name;
+  console.log('watch');
+  console.log(productOnDB.value?.name);
+  // price.value = pr
+});
 
 // interface Props {
 //   product: Product | null;
@@ -41,10 +47,27 @@ console.log({ productPAVal: productOnDB.value }); // undefined
 const name = ref<string | null>(null);
 const price = ref<number | null>(null);
 const isStock = ref<boolean>(false);
-onMounted(async () => {});
+
+onMounted(async () => {
+  const querySnapshotData = (
+    await getDoc(doc(db, `products/${urlId}`))
+  ).data() as Product;
+  console.log({ querySnapshotData });
+  name.value = querySnapshotData['name'];
+  price.value = querySnapshotData['price'];
+  isStock.value = querySnapshotData['isStock'] ?? false;
+});
 
 watch(name, async () => {
   const updateData = { name: name.value };
+  await updateDoc(doc(db, 'products', urlId), updateData);
+});
+watch(price, async () => {
+  const updateData = { price: price.value };
+  await updateDoc(doc(db, 'products', urlId), updateData);
+});
+watch(isStock, async () => {
+  const updateData = { isStock: isStock.value };
   await updateDoc(doc(db, 'products', urlId), updateData);
 });
 
