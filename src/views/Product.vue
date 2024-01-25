@@ -40,7 +40,7 @@ const priceUpdateLog = () => {
 
 <template>
   <div>
-    <ProductId :product="product" :productCollection="productCollection" />
+    <!-- <ProductId :product="product" :productCollection="productCollection" /> -->
     <br />
     <VList lines="two">
       <VListItem
