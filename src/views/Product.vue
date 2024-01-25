@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import ProductsList from '@/components/ProductsList.vue';
-import { doc } from 'firebase/firestore';
-import { useDocument, useFirestore } from 'vuefire';
+import { collection, doc } from 'firebase/firestore';
+import { useCollection, useDocument, useFirestore } from 'vuefire';
 
 const db = useFirestore()
 const product = useDocument(() => doc(db, `products`, 'PA'))
+const productCollection = useCollection(() => collection(db, `products`))
 
 const nameUpdateLog = (n: string) => {
   console.log(n);
@@ -20,6 +21,7 @@ const priceUpdateLog = () => {
     <ProductsList @updateProductName="nameUpdateLog" @updateProductPrice="priceUpdateLog" />
     <div>==========================</div>
     <div> {{ product }}</div>
+    <div> {{ productCollection }}</div>
   </div>
 </template>
 
