@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { addDoc, collection, getDoc, getDocs, doc } from '@firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, doc, updateDoc } from '@firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 interface Product {
   name: string | null,
@@ -42,6 +41,11 @@ onMounted(async () => {
   } catch (error) {
     throw new Error(`${JSON.stringify(error)}`)
   }
+})
+
+watch(name, async () => {
+  const updateData = { name: name.value }
+  await updateDoc(doc(db, 'products', 'PA'), updateData)
 })
 
 const db = useFirestore();
@@ -144,7 +148,8 @@ const updateValueNumber = (price: number) => {
     <button @click="saveDataToFB(productName, productPrice)">
       POST DATA INTO FIRESTORE
     </button>
-    <VTextField v-model="pname" label="Pname" />
+    <VTextField v-model="pname" label="Pname not working" />
+    <VTextField v-model="productPA?.name" label="Pname" />
     <VTextField v-model="name" label="name" />
     <div>{{ props.product?.name }}</div>
     <br />
