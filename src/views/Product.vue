@@ -22,7 +22,7 @@ const priceUpdateLog = () => {
   <div>
     <ProductsList :product="product" :productCollection="productCollection" @updateProductName="nameUpdateLog"
       @updateProductPrice="priceUpdateLog" />
-    <div>==========================</div>
+    <div>=========== bellow parent vue ===============</div>
     <div> {{ product }}</div>
     <div> {{ productCollection }}</div>
   </div>

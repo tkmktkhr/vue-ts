@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { addDoc, collection, getDocs } from '@firebase/firestore';
-import { useCollection, useFirestore } from 'vuefire';
+import { addDoc, collection, getDocs, doc } from '@firebase/firestore';
+import { useCollection, useDocument, useFirestore } from 'vuefire';
 import { ref } from 'vue';
 
 interface Product {
@@ -18,16 +18,31 @@ const props = withDefaults(defineProps<Props>(), {
   productCollection: null
 })
 
+// props is `null` when first init rendering.
+console.log('list inside ----------------')
 console.log(props)
 console.log(props.product)
+console.log(props.product?.name) // undefined
 console.log(props.productCollection)
+
+const name = ref(props.product?.name)
+console.log(name)
+console.log(name.value) // Empty Array
+console.log('list inside ---------------- here end')
+
 
 const db = useFirestore();
 
+// document
+const productPA = useDocument(doc(db, `products`, 'PA'))
+console.log({ productPA });
+console.log({ productPAVal: productPA.value });
+// const pname = ref(productPA.data.value.name)
 // collection
 const productsRef = collection(db, 'products');
 const productsDb = useCollection(productsRef);
-console.log({ value: productsDb });
+console.log({ productsDb });
+console.log({ productsDbVal: productsDb.value });
 
 const fetchDataFromFB = async () => {
   console.log('fetching...');
@@ -114,7 +129,7 @@ const updateValueNumber = (price: number) => {
     <button @click="saveDataToFB(productName, productPrice)">
       POST DATA INTO FIRESTORE
     </button>
-    <VTextField label="name" />
+    <VTextField v-model="productPA?.['name']" label="name" />
     <div>{{ props }}</div>
   </div>
 </template>
