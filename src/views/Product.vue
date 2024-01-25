@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import ProductsList from '@/components/ProductsList.vue';
+import ProductsListSample from '@/components/ProductsListSample.vue';
 import { collection, doc } from 'firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
 
-const db = useFirestore()
-const product = useDocument(() => doc(db, `products`, 'PA'))
-const productCollection = useCollection(() => collection(db, `products`))
-console.log(product)
-console.log(productCollection)
+const db = useFirestore();
+const product = useDocument(() => doc(db, `products`, 'PA'));
+const productCollection = useCollection(() => collection(db, `products`));
+console.log(product);
+console.log(productCollection);
 
 const nameUpdateLog = (n: string) => {
   console.log(n);
@@ -20,18 +21,26 @@ const priceUpdateLog = () => {
 
 <template>
   <div>
-    <ProductsList :product="product" :productCollection="productCollection" @updateProductName="nameUpdateLog"
-      @updateProductPrice="priceUpdateLog" />
+    <ProductsList
+      :product="product"
+      :productCollection="productCollection"
+      @updateProductName="nameUpdateLog"
+      @updateProductPrice="priceUpdateLog"
+    />
     <br />
     <br />
     <div>=========== bellow ProductsList Sample vue ===============</div>
-    <ProductsList :product="product" :productCollection="productCollection" @updateProductName="nameUpdateLog"
-      @updateProductPrice="priceUpdateLog" />
+    <ProductsListSample
+      :product="product"
+      :productCollection="productCollection"
+      @updateProductName="nameUpdateLog"
+      @updateProductPrice="priceUpdateLog"
+    />
     <br />
     <br />
     <div>=========== bellow parent vue ===============</div>
-    <div> {{ product }}</div>
-    <div> {{ productCollection }}</div>
+    <div>{{ product }}</div>
+    <div>{{ productCollection }}</div>
   </div>
 </template>
 
