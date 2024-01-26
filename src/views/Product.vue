@@ -10,6 +10,7 @@ import {
   VListItem,
   VListItemSubtitle,
   VListItemTitle,
+  VSpacer,
 } from 'vuetify/components';
 
 const db = useFirestore();
@@ -40,7 +41,6 @@ const priceUpdateLog = () => {
 
 <template>
   <div>
-    <!-- <ProductId :product="product" :productCollection="productCollection" /> -->
     <br />
     <div>-------------------- list --------------------</div>
     <VList lines="two">
@@ -50,12 +50,15 @@ const priceUpdateLog = () => {
         ripple
         :value="p"
         color="primary"
+        :to="`products/${p.id}`"
       >
         <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
-        <VListItemSubtitle>
-          price: {{ p.price }}
-          <VBtn :to="`products/${p.id}`"> see detail </VBtn>
-        </VListItemSubtitle>
+        <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
+        <VSpacer />
+        <!-- <ProductId :product="product" :productCollection="productCollection" /> -->
+        <div>
+          --------------------------------------------------------------
+        </div>
       </VListItem>
     </VList>
     <br />
