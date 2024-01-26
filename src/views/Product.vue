@@ -55,7 +55,6 @@ const priceUpdateLog = () => {
         <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
         <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
         <VSpacer />
-        <!-- <ProductId :product="product" :productCollection="productCollection" /> -->
         <div>
           --------------------------------------------------------------
         </div>
