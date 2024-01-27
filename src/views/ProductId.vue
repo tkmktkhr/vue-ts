@@ -14,13 +14,13 @@ if (!urlId || Array.isArray(urlId)) {
   throw new Error();
 }
 
-const product = useDocument(() => doc(db, `products`, urlId)).data;
+const productDbSync = useDocument(() => doc(db, `products`, urlId)).data;
 </script>
 
 <template>
   <div>
     <div>{{ urlId }}</div>
-    <ProductDetail :id="urlId" :product="product" />
+    <ProductDetail :id="urlId" :productDbSync="productDbSync" />
     <br />
   </div>
 </template>

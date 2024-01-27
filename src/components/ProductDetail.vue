@@ -9,16 +9,16 @@ const db = useFirestore();
 
 interface Props {
   id: string;
-  product: Product | null;
+  productDbSync: Product | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  product: null,
+  productDbSync: null,
 });
 
 // watch data from props.
 watch(
-  () => props.product,
+  () => props.productDbSync,
   (val) => {
     console.log('watch the data from a parent component.');
     console.log(val);
@@ -32,7 +32,7 @@ watch(
 
 const name = ref<string | null>(null);
 const price = ref<number | null>(null);
-const isStock = ref<boolean>(false);
+const isStock = ref<boolean | null>(false);
 
 onMounted(async () => {
   console.log({ propsId: props.id });
@@ -66,10 +66,10 @@ watch(isStock, async () => {
     <VSwitch v-model="isStock" :label="`isStock: ${isStock}`" />
     <br />
     <!-- <div>data from fire store: {{ productOnDB }}</div> -->
-    <div>data from props: {{ props.product?.name }}</div>
+    <div>data from props: {{ props.productDbSync?.name }}</div>
     <br />
-    <div>data from props: {{ props.product?.price }}</div>
+    <div>data from props: {{ props.productDbSync?.price }}</div>
     <br />
-    <div>data from props: {{ props.product?.isStock }}</div>
+    <div>data from props: {{ props.productDbSync?.isStock }}</div>
   </div>
 </template>
