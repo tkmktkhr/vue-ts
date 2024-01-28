@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ProductId from '@/views/ProductId.vue';
 import ProductsListSample from '@/components/ProductsListSample.vue';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
