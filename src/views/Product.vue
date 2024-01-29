@@ -22,9 +22,9 @@ const products = ref<Product[]>([]);
 
 onMounted(async () => {
   const querySnapshot = await getDocs(collection(db, 'products'));
-  const res = querySnapshot.docs.map((doc) => {
-    return { ...doc.data(), ...{ id: doc.id } };
-  });
+  const res = querySnapshot.docs.map(
+    (doc) => ({ ...doc.data(), ...{ id: doc.id } }) as Product,
+  );
   console.log({ res });
   products.value = res;
 });
