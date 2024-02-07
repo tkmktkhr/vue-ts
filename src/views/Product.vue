@@ -13,7 +13,7 @@ import {
 } from 'vuetify/components';
 
 const db = useFirestore();
-const product = useDocument(() => doc(db, `products`, 'PA'));
+const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
 const productCollection = useCollection(() => collection(db, `products`));
 console.log(product);
 console.log(productCollection);
