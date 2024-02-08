@@ -14,7 +14,7 @@ import {
 
 const db = useFirestore();
 const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
-const productCollection = useCollection(() => collection(db, `products`));
+const productCollection = useCollection<Product[]>(() => collection(db, `products`));
 console.log(product);
 console.log(productCollection);
 
