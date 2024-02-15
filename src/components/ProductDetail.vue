@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { getDoc, doc, updateDoc } from '@firebase/firestore';
+// import { useDocument, useFirestore } from 'vuefire';
 import { useFirestore } from 'vuefire';
 import { onMounted, ref, watch } from 'vue';
 import { Product } from '@/domains/product';
 import { VSwitch } from 'vuetify/components';
+// import { computed } from 'vue';
 
 const db = useFirestore();
 
@@ -30,6 +32,14 @@ watch(
   },
 );
 
+// S: for bad behaviour
+// const badName = useDocument<Product>(
+//   computed(() => doc(db, `products`, `${props.id}`)),
+// ).data;
+// if (!querySnapshotData.value) return;
+// return querySnapshotData.value['name'];
+// E: for bad behaviour
+
 const name = ref<string | null>(null);
 const price = ref<number | null>(null);
 const isStock = ref<boolean | null>(false);
@@ -44,6 +54,12 @@ onMounted(async () => {
   price.value = querySnapshotData['price'];
   isStock.value = querySnapshotData['isStock'] ?? false; // default value
 });
+
+// S: for bad behaviour
+// watch(badName, () => {
+//   name.value = badName.value;
+// });
+// E: for bad behaviour
 
 watch(name, async () => {
   const updateData = { name: name.value };
@@ -61,6 +77,7 @@ watch(isStock, async () => {
 
 <template>
   <div>
+    <!-- <VTextField v-model="badName" label="Product Name" /> -->
     <VTextField v-model="name" label="Product Name" />
     <VTextField v-model="price" type="number" label="Product Price" />
     <VSwitch v-model="isStock" :label="`isStock: ${isStock}`" />
