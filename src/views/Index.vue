@@ -5,6 +5,8 @@ import ProductCard from '@/components/ProductCard.vue';
 import { useProductStore } from '@/stores/ProductStore';
 import { useCartStore } from '@/stores/CartStore';
 import AppButton from '@/components/AppButton.vue';
+import { computed } from 'vue';
+import { ref } from 'vue';
 
 // document
 // import { useDocument } from 'vuefire'
@@ -40,6 +42,18 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
 //     }
 //   });
 // };
+const count = ref<number | null>(null);
+
+const total = computed(() => cartStore.total);
+const testPlusOne = computed(() => {
+  const val = total.value;
+  count.value = val + 100;
+  return calc(val);
+});
+
+const calc = (count: number) => {
+  return count + 10;
+};
 </script>
 
 <template>
@@ -48,6 +62,8 @@ cartStore.$onAction(({ name, store, args, after, onError }) => {
   <AppFooter /> -->
   <div class="container">
     <TheHeader />
+    {{ count }}
+    {{ testPlusOne }}
     <div class="mb-5 flex justify-end"></div>
     <AppButton @click="cartStore.undo">Undo</AppButton>
     <AppButton @click="cartStore.redo">Redo</AppButton>
