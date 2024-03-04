@@ -48,7 +48,7 @@ const total = computed(() => cartStore.total);
 const testPlusOne = computed(() => {
   const val = total.value;
   count.value = val + 100;
-  return calc(val);
+  return calc(count.value);
 });
 
 const calc = (count: number) => {
