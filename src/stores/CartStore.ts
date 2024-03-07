@@ -1,4 +1,4 @@
-import { defineStore, acceptHMRUpdate } from 'pinia';
+import { defineStore, acceptHMRUpdate, _GettersTree } from 'pinia';
 // import { RemovableRef, useLocalStorage } from '@vueuse/core';
 import { IProduct } from '@/stores/ProductStore';
 import { groupBy } from 'lodash';
@@ -13,7 +13,15 @@ interface IState {
 
 type TGrouped = { [key: string]: IProduct[] };
 
-interface Getters {
+// interface GettersFunc {
+//   count: (state: IState) => number;
+//   isEmpty: (state: IState) => boolean;
+//   grouped: (state: IState) => TGrouped;
+//   groupCount: (state: IState) => (name: string) => number;
+//   total: (state: IState) => number;
+// }
+
+interface Getters extends _GettersTree<IState> {
   count: (state: IState) => number;
   isEmpty: (state: IState) => boolean;
   grouped: (state: IState) => TGrouped;
@@ -22,9 +30,9 @@ interface Getters {
 }
 
 interface Actions {
-  addBork: (bork: string) => void;
+  // addBork: (bork: string) => void;
   checkout: () => void;
-  addItems: (count: number, item: IProduct) => IProduct[];
+  addItems: (count: number, item: IProduct) => void;
   clearItem: (itemName: string) => void;
   setItemCount: (item: IProduct, count: number) => void;
 }
