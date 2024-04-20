@@ -13,7 +13,6 @@ import AppModalOverlay from '@/components/AppModalOverlay.vue';
 // Icons and Styles
 import FontAwesomePlugin from './plugins/FontAwesome';
 import { PiniaHistoryPlugin } from '@/plugins/PiniaHistoryPlugin';
-// import { getFirestore } from 'firebase/firestore';
 import { createDb } from './db';
 import { VueFire, VueFireAuth } from 'vuefire';
 // vuetify
@@ -31,7 +30,6 @@ const pinia = createPinia();
 pinia.use(PiniaHistoryPlugin);
 
 const firebase = createDb();
-// export const db = getFirestore(firebase);
 
 const vuetify = createVuetify({
   components,
