@@ -9,12 +9,16 @@ import {
   VListItem,
   VListItemSubtitle,
   VListItemTitle,
+  VRow,
   VSpacer,
 } from 'vuetify/components';
+import { mdiMenuOpen } from '@mdi/js';
 
 const db = useFirestore();
 const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
-const productCollection = useCollection<Product[]>(() => collection(db, `products`));
+const productCollection = useCollection<Product[]>(() =>
+  collection(db, `products`),
+);
 console.log(product);
 console.log(productCollection);
 
@@ -41,7 +45,7 @@ const priceUpdateLog = () => {
 <template>
   <div>
     <br />
-    <div>-------------------- list --------------------</div>
+    <div>Product List</div>
     <VList lines="two">
       <VListItem
         v-for="p in products"
@@ -51,16 +55,21 @@ const priceUpdateLog = () => {
         color="primary"
         :to="`products/${p.id}`"
       >
-        <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
-        <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
-        <VSpacer />
-        <div>
-          --------------------------------------------------------------
-        </div>
+        <VRow>
+          <VCol cols="10">
+            <VListItemTitle>{{ p.name ? p.name : 'no name' }}</VListItemTitle>
+            <VListItemSubtitle> price: {{ p.price }} </VListItemSubtitle>
+            <VSpacer />
+            <div>-------------------------------------------------</div>
+          </VCol>
+          <VCol cols="2">
+            <VBtn size="small" :icon="mdiMenuOpen" />
+          </VCol>
+        </VRow>
       </VListItem>
     </VList>
     <br />
-    <div>=========== bellow ProductsList Sample vue ===============</div>
+    <div>=========== ProductsList Sample vue ===============</div>
     <ProductsListSample
       :product="product"
       :productCollection="productCollection"
@@ -69,7 +78,7 @@ const priceUpdateLog = () => {
     />
     <br />
     <br />
-    <div>=========== bellow parent vue ===============</div>
+    <div>=========== parent vue ===============</div>
     <div>{{ product }}</div>
     <div>{{ productCollection }}</div>
   </div>
