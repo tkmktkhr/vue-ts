@@ -5,6 +5,7 @@ import { useCollection, useDocument, useFirestore } from 'vuefire';
 import { ref, onMounted } from 'vue';
 import { Product } from '@/domains/product';
 import {
+  VHover,
   VList,
   VListItem,
   VListItemSubtitle,
@@ -63,7 +64,46 @@ const priceUpdateLog = () => {
             <div>-------------------------------------------------</div>
           </VCol>
           <VCol cols="2">
-            <VBtn size="small" :icon="mdiMenuOpen" />
+            <VMenu
+              openOnHover
+              transition="slide-x-reverse-transition"
+              location="start"
+            >
+              <template #activator="{ props }">
+                <VBtn size="small" :icon="mdiMenuOpen" v-bind="props" />
+              </template>
+
+              <!-- not use VHover -->
+              <!-- <VList>
+                <VListItem
+                  v-for="(i, index) in products"
+                  :key="index"
+                  color="primary"
+                >
+                  <VHover v-slot="{ isHovering }">
+                    <VListItemTitle :class="{ 'on-hover': isHovering }">
+                      {{ i.name ? i.name : 'no name' }}
+                    </VListItemTitle>
+                  </VHover>
+                </VListItem>
+              </VList> -->
+
+              <!-- TODO add class for hover. -->
+              <VList>
+                <VHover v-slot="{ isHovering }">
+                  <VListItem
+                    v-for="(i, index) in products"
+                    :key="index"
+                    :class="{ 'on-hover': isHovering }"
+                    color="primary"
+                  >
+                    <VListItemTitle>
+                      {{ i.name ? i.name : 'no name' }}
+                    </VListItemTitle>
+                  </VListItem>
+                </VHover>
+              </VList>
+            </VMenu>
           </VCol>
         </VRow>
       </VListItem>
@@ -84,4 +124,11 @@ const priceUpdateLog = () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* .v-list-item-title.on-hover {
+  background-color: red;
+} */
+/* .v-list-item:hover {
+  background-color: red;
+} */
+</style>
