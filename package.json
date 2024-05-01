@@ -21,7 +21,7 @@
     "vue": "^3.4.25",
     "vue-router": "^4.3.2",
     "vuefire": "^3.1.23",
-    "vuetify": "^3.5.17"
+    "vuetify": "^3.6.1"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",
