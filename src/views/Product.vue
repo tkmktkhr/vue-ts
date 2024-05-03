@@ -65,7 +65,7 @@ const priceUpdateLog = () => {
           </VCol>
           <VCol cols="2">
             <VMenu
-              openOnHover
+              open-on-hover
               transition="slide-x-reverse-transition"
               location="start"
             >
@@ -89,7 +89,7 @@ const priceUpdateLog = () => {
               </VList> -->
 
               <!-- TODO add class for hover. -->
-              <VList>
+              <VList border>
                 <VHover v-slot="{ isHovering }">
                   <VListItem
                     v-for="(i, index) in products"
