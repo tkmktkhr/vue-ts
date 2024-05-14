@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate, _GettersTree } from 'pinia';
 // import { RemovableRef, useLocalStorage } from '@vueuse/core';
 import { IProduct } from '@/stores/ProductStore';
-import { groupBy } from 'lodash';
+import groupBy from 'lodash-es/groupBy';
 import { useAuthUserStore } from './AuthUserStore';
 
 interface IState {
