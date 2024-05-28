@@ -12,7 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@mdi/js": "^7.4.47",
-    "@vueuse/core": "^10.9.0",
+    "@vueuse/core": "^10.10.0",
     "firebase": "^10.12.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.1.7",
