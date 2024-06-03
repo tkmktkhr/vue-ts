@@ -13,7 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@mdi/js": "^7.4.47",
     "@vueuse/core": "^10.10.0",
-    "firebase": "^10.12.1",
+    "firebase": "^10.12.2",
     "lodash-es": "^4.17.21",
     "pinia": "^2.1.7",
     "ts-node": "^10.9.2",
