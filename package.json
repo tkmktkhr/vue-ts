@@ -20,7 +20,7 @@
     "vue": "^3.4.27",
     "vue-router": "^4.3.3",
     "vuefire": "^3.1.23",
-    "vuetify": "^3.6.8"
+    "vuetify": "^3.6.9"
   },
   "devDependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.8",
