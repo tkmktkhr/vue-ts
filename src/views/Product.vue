@@ -2,7 +2,7 @@
 import ProductsListSample from '@/components/ProductsListSample.vue';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { useCollection, useDocument, useFirestore } from 'vuefire';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { Product } from '@/domains/product';
 import {
   VHover,
@@ -16,12 +16,13 @@ import {
 import { mdiMenuOpen } from '@mdi/js';
 
 const db = useFirestore();
-const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
+// const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
+const product = useDocument<Product>(computed(() => doc(db, `products`, 'PA')));
 const productCollection = useCollection<Product[]>(() =>
   collection(db, `products`),
 );
-console.log(product);
-console.log(productCollection);
+console.log('product', product);
+console.log('productCollection', productCollection);
 
 const products = ref<Product[]>([]);
 
@@ -31,6 +32,7 @@ onMounted(async () => {
     (doc) => ({ ...doc.data(), ...{ id: doc.id } }) as Product,
   );
   console.log({ res });
+  console.log('onMounted -------------------');
   products.value = res;
 });
 
@@ -110,12 +112,12 @@ const priceUpdateLog = () => {
     </VList>
     <br />
     <div>=========== ProductsList Sample vue ===============</div>
-    <ProductsListSample
+    <!-- <ProductsListSample
       :product="product"
       :productCollection="productCollection"
       @updateProductName="nameUpdateLog"
       @updateProductPrice="priceUpdateLog"
-    />
+    /> -->
     <br />
     <br />
     <div>=========== parent vue ===============</div>
