@@ -12,8 +12,8 @@ import { onMounted, ref, watch } from 'vue';
 import { Product } from '@/domains/product';
 
 interface Props {
-  product: Product | null;
-  productCollection: Product[] | null;
+  product: Product | undefined | null;
+  productCollection: Product[] | undefined | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
