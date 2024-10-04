@@ -3,27 +3,14 @@ import { mdiChevronUpCircle, mdiChevronDownCircle } from '@mdi/js';
 
 import { ref, onMounted, computed } from 'vue';
 import { map, filter } from 'lodash-es';
+import { TData } from '@/domains/sampleData';
+import StaticDataTable from '@/components/StaticDataTable.vue';
 
 const mockedData = ref<TData[]>([]);
 
 onMounted(() => {
   mockedData.value = data;
 });
-
-type TData = {
-  id: string;
-  name: string;
-  type: string;
-  arr: number[] | null;
-  isDropDown: boolean;
-  details: Detail[];
-};
-
-interface Detail {
-  id: string;
-  name: string;
-  arr: string[];
-}
 
 const data: TData[] = [
   {
@@ -122,6 +109,10 @@ const searchableKeys = computed(() => {
 const openId = ref<string | null>(null);
 const isOpen = ref(false);
 
+const panel = computed(() => {
+  return isOpen.value ? [0] : [];
+});
+
 const open = (item: TData) => {
   openId.value = item.id;
   isOpen.value = !isOpen.value;
@@ -132,6 +123,17 @@ const open = (item: TData) => {
 <template>
   <div>
     <p>Practice {{ openId }}</p>
+    <!-- <v-expansion-panels hide-actions v-model="panel">
+      <v-expansion-panel>
+        <v-expansion-panel-title v-if="isOpen">
+          Items
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <StaticDataTable :details="data[0]?.details" />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels> -->
+
     <VDataTableServer
       :headers="headers"
       :items="data"
@@ -141,12 +143,24 @@ const open = (item: TData) => {
       <template #[`item.isDropDown`]="{ item }">
         <VBtn
           v-if="item.isDropDown"
-          variant="outlined"
+          variant="text"
+          icon
           size="small"
           @click="open(item)"
         >
           <VIcon :icon="isOpen ? mdiChevronDownCircle : mdiChevronUpCircle" />
         </VBtn>
+
+        <v-expansion-panels hide-actions v-model="panel">
+          <v-expansion-panel>
+            <v-expansion-panel-title v-if="isOpen">
+              Items
+            </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <StaticDataTable :details="item.details" />
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </template>
     </VDataTableServer>
   </div>
