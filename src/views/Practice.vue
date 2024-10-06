@@ -14,9 +14,9 @@ onMounted(() => {
 
 const data: TData[] = [
   {
-    bid: 'b-1',
+    bid: 'b-1', // groupByKey - item-key, item-value
     id: '1',
-    name: 'name1', // groupByKey
+    name: 'name1',
     type: 'type1',
     arr: [1, 2, 3],
     isDropDown: true,
@@ -132,19 +132,6 @@ const searchableKeys = computed(() => {
   return map(filter(headers, 'searchable'), 'key');
 });
 
-const openId = ref<string | null>(null);
-const isOpen = ref(false);
-
-const panel = computed(() => {
-  return isOpen.value ? [0] : [];
-});
-
-const open = (item: TData) => {
-  openId.value = item.id;
-  isOpen.value = !isOpen.value;
-  console.log(item);
-};
-
 const groupBy = [
   {
     key: 'bid',
@@ -155,7 +142,7 @@ const groupBy = [
 
 <template>
   <div>
-    <p>Practice {{ openId }}</p>
+    <p>Group Table</p>
     <VDataTable
       :group-by="groupBy"
       :headers="headers"
@@ -165,6 +152,134 @@ const groupBy = [
       <template
         v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }"
       >
+        <!-- item -->
+        <!-- {
+            "depth": 0,
+            "id": "root_bid_b-1",
+            "key": "bid",
+            "value": "b-1",
+            "items": [
+                  {
+                    "type": "item",
+                    "key": "1",
+                    "index": 0,
+                    "value": {
+                        "bid": "b-1",
+                        "id": "1",
+                        "name": "name1",
+                        "type": "type1",
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "isDropDown": true,
+                        "amount": 1,
+                        "details": [
+                            {
+                                "id": "1-1",
+                                "name": "1-1",
+                                "arr": [
+                                    "1-1-1",
+                                    "1-1-2",
+                                    "1-1-3"
+                                ]
+                            }
+                        ]
+                    },
+                    "selectable": true,
+                    "columns": {
+                        "isDropDown": true,
+                        "id": "1",
+                        "name": "name1",
+                        "type": "type1",
+                        "amount": 1,
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ]
+                    },
+                    "raw": {
+                        "bid": "b-1",
+                        "id": "1",
+                        "name": "name1",
+                        "type": "type1",
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "isDropDown": true,
+                        "amount": 1,
+                        "details": []
+                    }
+                  },
+                  {
+                    "type": "item",
+                    "key": "1-1",
+                    "index": 1,
+                    "value": {
+                        "bid": "b-1",
+                        "id": "1-1",
+                        "name": "name1",
+                        "type": "type1-1",
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "isDropDown": true,
+                        "amount": 5,
+                        "details": []
+                    },
+                    "selectable": true,
+                    "columns": {
+                        "isDropDown": true,
+                        "id": "1-1",
+                        "name": "name1",
+                        "type": "type1-1",
+                        "amount": 5,
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ]
+                    },
+                    "raw": {
+                        "bid": "b-1",
+                        "id": "1-1",
+                        "name": "name1",
+                        "type": "type1-1",
+                        "arr": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "isDropDown": true,
+                        "amount": 5,
+                        "details": []
+                    }
+                  }
+            ],
+            "type": "group"
+        } -->
+
+        <!-- columns -->
+        <!-- [
+          {
+              "title": "",
+              "sortable": false,
+              "key": "data-table-group",
+              "value": "data-table-group"
+          },
+          {
+              "title": "bool",
+              "key": "isDropDown",
+              "sortable": false,
+              "value": "isDropDown"
+          },
+        ] -->
         <tr>
           <td :colspan="columns.length - 6">
             <template class="d-flex align-start">
