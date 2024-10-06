@@ -19,6 +19,7 @@ const data: TData[] = [
     type: 'type1',
     arr: [1, 2, 3],
     isDropDown: true,
+    amount: 1,
     details: [
       {
         id: '1-1',
@@ -43,11 +44,27 @@ const data: TData[] = [
     ],
   },
   {
+    id: '1-1',
+    name: 'name1',
+    type: 'type1-1',
+    arr: [1, 2, 3],
+    isDropDown: true,
+    amount: 5,
+    details: [
+      {
+        id: '1-1',
+        name: '1-1',
+        arr: ['1-1-1', '1-1-2', '1-1-3'],
+      },
+    ],
+  },
+  {
     id: '2',
     name: 'name2',
     type: 'type2',
     arr: [2],
     isDropDown: false,
+    amount: 2,
     details: [],
   },
   {
@@ -56,6 +73,7 @@ const data: TData[] = [
     type: 'type3',
     arr: [1, 2, 3],
     isDropDown: true,
+    amount: 3,
     details: [
       {
         id: '3-1',
@@ -75,6 +93,7 @@ const data: TData[] = [
     type: 'type4',
     arr: null,
     isDropDown: false,
+    amount: 4,
     details: [],
   },
 ];
@@ -95,10 +114,11 @@ interface DataTableHeader {
 }
 
 const headers: DataTableHeader[] = [
-  { title: '', key: 'isDropDown', sortable: false },
+  { title: 'bool', key: 'isDropDown', sortable: false },
   { title: 'id', key: 'id', sortable: true },
   { title: 'name', key: 'name', sortable: true },
   { title: 'type', key: 'type', sortable: true },
+  { title: 'amount', key: 'amount', sortable: true },
   { title: 'arr', key: 'arr', sortable: true },
 ];
 
@@ -118,50 +138,45 @@ const open = (item: TData) => {
   isOpen.value = !isOpen.value;
   console.log(item);
 };
+
+const groupBy = [
+  {
+    key: 'name',
+    order: 'asc',
+  },
+];
 </script>
 
 <template>
   <div>
     <p>Practice {{ openId }}</p>
-    <!-- <v-expansion-panels hide-actions v-model="panel">
-      <v-expansion-panel>
-        <v-expansion-panel-title v-if="isOpen">
-          Items
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <StaticDataTable :details="data[0]?.details" />
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-    </v-expansion-panels> -->
-
-    <VDataTableServer
+    <VDataTable
+      :group-by="groupBy"
       :headers="headers"
       :items="data"
-      item-key="id"
-      item-value="id"
+      return-object
     >
-      <template #[`item.isDropDown`]="{ item }">
-        <VBtn
-          v-if="item.isDropDown"
-          variant="text"
-          icon
-          size="small"
-          @click="open(item)"
-        >
-          <VIcon :icon="isOpen ? mdiChevronDownCircle : mdiChevronUpCircle" />
-        </VBtn>
-
-        <v-expansion-panels hide-actions v-model="panel">
-          <v-expansion-panel>
-            <v-expansion-panel-title v-if="isOpen">
-              Items
-            </v-expansion-panel-title>
-            <v-expansion-panel-text>
-              <StaticDataTable :details="item.details" />
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
+      <template
+        v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }"
+      >
+        <tr>
+          <td :colspan="columns.length - 5">
+            <template class="d-flex align-start">
+              <VBtn
+                :icon="isGroupOpen(item) ? '$expand' : '$next'"
+                size="small"
+                variant="text"
+                @click="toggleGroup(item)"
+              ></VBtn>
+            </template>
+          </td>
+          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>a</td>
+        </tr>
       </template>
-    </VDataTableServer>
+    </VDataTable>
   </div>
 </template>
