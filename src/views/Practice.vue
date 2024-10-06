@@ -14,8 +14,9 @@ onMounted(() => {
 
 const data: TData[] = [
   {
+    bid: 'b-1',
     id: '1',
-    name: 'name1',
+    name: 'name1', // groupByKey
     type: 'type1',
     arr: [1, 2, 3],
     isDropDown: true,
@@ -44,6 +45,7 @@ const data: TData[] = [
     ],
   },
   {
+    bid: 'b-1',
     id: '1-1',
     name: 'name1',
     type: 'type1-1',
@@ -59,6 +61,7 @@ const data: TData[] = [
     ],
   },
   {
+    bid: 'b-2',
     id: '2',
     name: 'name2',
     type: 'type2',
@@ -68,6 +71,7 @@ const data: TData[] = [
     details: [],
   },
   {
+    bid: 'b-3',
     id: '3',
     name: 'name3',
     type: 'type3',
@@ -88,6 +92,7 @@ const data: TData[] = [
     ],
   },
   {
+    bid: 'b-3',
     id: '4',
     name: 'name4',
     type: 'type4',
@@ -114,6 +119,7 @@ interface DataTableHeader {
 }
 
 const headers: DataTableHeader[] = [
+  { title: '', key: 'data-table-group', sortable: false },
   { title: 'bool', key: 'isDropDown', sortable: false },
   { title: 'id', key: 'id', sortable: true },
   { title: 'name', key: 'name', sortable: true },
@@ -141,7 +147,7 @@ const open = (item: TData) => {
 
 const groupBy = [
   {
-    key: 'name',
+    key: 'bid',
     order: 'asc',
   },
 ];
@@ -160,7 +166,7 @@ const groupBy = [
         v-slot:group-header="{ item, columns, toggleGroup, isGroupOpen }"
       >
         <tr>
-          <td :colspan="columns.length - 5">
+          <td :colspan="columns.length - 6">
             <template class="d-flex align-start">
               <VBtn
                 :icon="isGroupOpen(item) ? '$expand' : '$next'"
@@ -170,11 +176,12 @@ const groupBy = [
               ></VBtn>
             </template>
           </td>
+          <td>group_parent1</td>
+          <td>group_parent: {{ item.items.map((c) => c.value.amount) }}</td>
+          <td>group_parent: {{ item.items.map((c) => c.value.amount) }}</td>
           <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
-          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
-          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
-          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
-          <td>a</td>
+          <td>group_parent:</td>
+          <td>group_parent:</td>
         </tr>
       </template>
     </VDataTable>
