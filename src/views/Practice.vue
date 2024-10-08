@@ -12,9 +12,30 @@ onMounted(() => {
   mockedData.value = data;
 });
 
+const rootData = [
+  {
+    col1: 'root1-1',
+    col2: 'root1-2',
+    col3: 'root1-3',
+    col4: ['1-1', '1-2', '1-3', '1-4'],
+  },
+  {
+    col1: 'root2-1',
+    col2: 'root2-2',
+    col3: 'root2-3',
+    col4: ['2-1', '2-2', '2-3', '2-4'],
+  },
+  {
+    col1: 'root3-1',
+    col2: 'root3-2',
+    col3: 'root3-3',
+    col4: ['3-1', '3-2', '3-3', '3-4'],
+  },
+];
+
 const data: TData[] = [
   {
-    bid: 'b-1', // groupByKey - item-key, item-value
+    bid: rootData[0], // groupByKey - item-key, item-value
     id: '1',
     name: 'name1',
     type: 'type1',
@@ -45,7 +66,7 @@ const data: TData[] = [
     ],
   },
   {
-    bid: 'b-1',
+    bid: rootData[0],
     id: '1-1',
     name: 'name1',
     type: 'type1-1',
@@ -61,7 +82,7 @@ const data: TData[] = [
     ],
   },
   {
-    bid: 'b-2',
+    bid: rootData[1],
     id: '2',
     name: 'name2',
     type: 'type2',
@@ -71,7 +92,7 @@ const data: TData[] = [
     details: [],
   },
   {
-    bid: 'b-3',
+    bid: rootData[2],
     id: '3',
     name: 'name3',
     type: 'type3',
@@ -92,7 +113,7 @@ const data: TData[] = [
     ],
   },
   {
-    bid: 'b-3',
+    bid: rootData[2],
     id: '4',
     name: 'name4',
     type: 'type4',
@@ -157,7 +178,17 @@ const groupBy = [
             "depth": 0,
             "id": "root_bid_b-1",
             "key": "bid",
-            "value": "b-1",
+            "value": {
+                "col1": "root1-1",
+                "col2": "root1-2",
+                "col3": "root1-3",
+                "col4": [
+                    "1-1",
+                    "1-2",
+                    "1-3",
+                    "1-4"
+                ]
+            },
             "items": [
                   {
                     "type": "item",
@@ -291,9 +322,9 @@ const groupBy = [
               ></VBtn>
             </template>
           </td>
-          <td>group_parent1</td>
-          <td>group_parent: {{ item.items.map((c) => c.value.amount) }}</td>
-          <td>group_parent: {{ item.items.map((c) => c.value.amount) }}</td>
+          <td>{{ item.value.col1 }}</td>
+          <td>{{ item.value.col2 }}</td>
+          <td>{{ item.value.col3 }}</td>
           <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
           <td>group_parent:</td>
           <td>group_parent:</td>

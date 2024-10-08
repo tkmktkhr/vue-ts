@@ -1,5 +1,5 @@
 export interface TData {
-  bid: string;
+  bid: unknown;
   id: string;
   name: string;
   type: string;
