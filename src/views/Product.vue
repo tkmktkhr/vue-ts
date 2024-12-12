@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import ProductsListSample from '@/components/ProductsListSample.vue';
+import CreateProduct from '@/components/products/CreateProduct.vue';
 import { storeToRefs } from 'pinia';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import {
   VHover,
   VList,
@@ -24,6 +25,15 @@ const nameUpdateLog = (n: string) => {
 const priceUpdateLog = () => {
   console.log('price was updated.');
 };
+
+const name = ref<string>('');
+const price = ref<number>(0);
+const isStock = ref<boolean>(false);
+const newProduct = computed(() => ({
+  name: name.value,
+  price: price.value,
+  isStock: isStock.value,
+}));
 </script>
 
 <template>
@@ -93,6 +103,14 @@ const priceUpdateLog = () => {
     </VList>
     <br />
     <div>=========== ProductsList Sample vue ===============</div>
+    <CreateProduct
+      v-model:name="name"
+      v-model:price="price"
+      v-model:is-stock="isStock"
+    />
+    <br />
+    {{ newProduct ?? 'no new product' }}
+    <br />
     <!-- <ProductsListSample
       :product="product"
       :productCollection="productCollection"

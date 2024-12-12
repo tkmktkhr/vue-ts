@@ -25,8 +25,14 @@ export const useProductStore = defineStore('ProductStore', () => {
     );
   });
 
+  const resolveProduct = (p: Partial<Product>): Product => ({
+    name: p.name ?? null,
+    price: p.price ?? 0,
+    isStock: p.isStock ?? false,
+  });
+
   const updateProduct = async (data: Product): Promise<void> => {
-    await setDoc(doc(db, `products`), data, { merge: true });
+    await setDoc(doc(db, `products`), resolveProduct(data), { merge: true });
   };
 
   return {
