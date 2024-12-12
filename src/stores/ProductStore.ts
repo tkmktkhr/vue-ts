@@ -1,52 +1,37 @@
+import { collection, getFirestore, setDoc, doc } from 'firebase/firestore';
 import { defineStore } from 'pinia';
-// import products from '@/data/products.json'
+import { computed } from 'vue';
+import { useCollection } from 'vuefire';
 
-// export const useCounterStore = defineStore('counter', {
-//   state: () => {
-//     return { count: 0 }
-//   },
-//   // could also be defined as
-//   // state: () => ({ count: 0 })
-//   actions: {
-//     increment() {
-//       this.count++
-//     },
-//   },
-// })
+import { Product } from '@/domains/product';
 
-interface State {
-  products: IProduct[];
-}
+export const useProductStore = defineStore('ProductStore', () => {
+  const db = getFirestore();
 
-export interface IProduct {
-  name: string;
-  image: string;
-  price: number;
-}
+  const products = useCollection<Product>(
+    computed(() => {
+      return collection(db, `products`);
+    }),
+  );
 
-// Another expression
-export const useProductStore = defineStore('ProductStore', {
-  // state
-  state: (): State => {
-    return {
-      products: [],
-    };
-  },
-  // actions
-  actions: {
-    async fill() {
-      this.products = (await import('@/data/products.json')).default;
-      // this.products = (await axious.get('http://localhost:3000/products')).data;
+  const productsWithId = computed(() => {
+    if (!products.value) return [];
+    return products.value.map(
+      (product) =>
+        ({
+          ...product,
+          id: product.id,
+        }) as Product,
+    );
+  });
 
-      // try-catch example.
-      // try {
-      //   this.userData = await api.post({ login, password })
-      //   showTooltip(`Welcome back ${this.userData.name}!`)
-      // } catch (error) {
-      //   showTooltip(error)
-      //   // let the form component display the error
-      //   return error
-      // }
-    },
-  },
+  const updateProduct = async (data: Product): Promise<void> => {
+    await setDoc(doc(db, `products`), data, { merge: true });
+  };
+
+  return {
+    products,
+    productsWithId,
+    updateProduct,
+  };
 });

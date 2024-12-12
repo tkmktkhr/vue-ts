@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import ProductsListSample from '@/components/ProductsListSample.vue';
-import { collection, doc, getDocs } from 'firebase/firestore';
-import { useCollection, useDocument, useFirestore } from 'vuefire';
+import { storeToRefs } from 'pinia';
 import { ref, onMounted, computed } from 'vue';
-import { Product } from '@/domains/product';
 import {
   VHover,
   VList,
@@ -13,28 +11,11 @@ import {
   VRow,
   VSpacer,
 } from 'vuetify/components';
+import { useProductStore } from '@/stores/ProductStore';
 import { mdiMenuOpen } from '@mdi/js';
 
-const db = useFirestore();
-// const product = useDocument<Product>(() => doc(db, `products`, 'PA'));
-const product = useDocument<Product>(computed(() => doc(db, `products`, 'PA')));
-const productCollection = useCollection<Product[]>(() =>
-  collection(db, `products`),
-);
-console.log('product', product);
-console.log('productCollection', productCollection);
-
-const products = ref<Product[]>([]);
-
-onMounted(async () => {
-  const querySnapshot = await getDocs(collection(db, 'products'));
-  const res = querySnapshot.docs.map(
-    (doc) => ({ ...doc.data(), ...{ id: doc.id } }) as Product,
-  );
-  console.log({ res });
-  console.log('onMounted -------------------');
-  products.value = res;
-});
+const productStore = useProductStore();
+const { productsWithId: products } = storeToRefs(productStore);
 
 const nameUpdateLog = (n: string) => {
   console.log(n);
@@ -119,10 +100,8 @@ const priceUpdateLog = () => {
       @updateProductPrice="priceUpdateLog"
     /> -->
     <br />
-    <br />
     <div>=========== parent vue ===============</div>
-    <div>{{ product }}</div>
-    <div>{{ productCollection }}</div>
+    <div>{{ products }}</div>
   </div>
 </template>
 
