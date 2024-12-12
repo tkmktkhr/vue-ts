@@ -1,4 +1,10 @@
-import { collection, getFirestore, setDoc, doc } from 'firebase/firestore';
+import {
+  collection,
+  getFirestore,
+  setDoc,
+  doc,
+  addDoc,
+} from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
 import { useCollection } from 'vuefire';
@@ -31,13 +37,13 @@ export const useProductStore = defineStore('ProductStore', () => {
     isStock: p.isStock ?? false,
   });
 
-  const updateProduct = async (data: Product): Promise<void> => {
-    await setDoc(doc(db, `products`), resolveProduct(data), { merge: true });
+  const createProduct = async (data: Product): Promise<void> => {
+    await addDoc(collection(db, `products`), resolveProduct(data));
   };
 
   return {
     products,
     productsWithId,
-    updateProduct,
+    createProduct,
   };
 });

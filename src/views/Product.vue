@@ -102,7 +102,7 @@ const newProduct = computed(() => ({
       </VListItem>
     </VList>
     <br />
-    <div>=========== ProductsList Sample vue ===============</div>
+    <div>=========== New Product vue ===============</div>
     <CreateProduct
       v-model:name="name"
       v-model:price="price"
