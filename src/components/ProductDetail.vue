@@ -1,92 +1,66 @@
 <script setup lang="ts">
-import { getDoc, doc, updateDoc } from '@firebase/firestore';
-// import { useDocument, useFirestore } from 'vuefire';
-import { useFirestore } from 'vuefire';
-import { onMounted, ref, watch } from 'vue';
+import { VNumberInput } from 'vuetify/labs/VNumberInput';
+import { ref, watch, watchEffect } from 'vue';
 import { Product } from '@/domains/product';
 import { VSwitch } from 'vuetify/components';
-// import { computed } from 'vue';
+import { computed, toRefs } from 'vue';
+import { useProductStore } from '@/stores/ProductStore';
+import { storeToRefs } from 'pinia';
 
-const db = useFirestore();
+const productStore = useProductStore();
+const { updateProduct } = productStore;
+const { productsWithId: products } = storeToRefs(productStore);
 
 interface Props {
   id: string;
-  productDbSync: Product | null;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  productDbSync: null,
+const props = defineProps<Props>();
+const { id } = toRefs(props);
+
+const product = computed<Product | null>(() => {
+  return products.value.find((p) => p.id === id.value) ?? null;
 });
 
-// watch data from props.
-watch(
-  () => props.productDbSync,
-  (val) => {
-    console.log('watch the data from a parent component.');
-    console.log(val);
-    if (!val) return;
-    console.log(val.name);
-    name.value = val.name;
-    price.value = val.price;
-    isStock.value = val.isStock;
-  },
-);
+const newName = ref<string | null>('');
+const newPrice = ref<number | null>(product.value?.price ?? 0);
+const newIsStock = ref<boolean | null>(product.value?.isStock ?? false);
 
-// S: for bad behaviour
-// const badName = useDocument<Product>(
-//   computed(() => doc(db, `products`, `${props.id}`)),
-// ).data;
-// if (!querySnapshotData.value) return;
-// return querySnapshotData.value['name'];
-// E: for bad behaviour
-
-const name = ref<string | null>(null);
-const price = ref<number | null>(null);
-const isStock = ref<boolean | null>(false);
-
-onMounted(async () => {
-  console.log({ propsId: props.id });
-  const querySnapshotData = (
-    await getDoc(doc(db, `products/${props.id}`))
-  ).data() as Product;
-  console.log({ querySnapshotData });
-  name.value = querySnapshotData['name'];
-  price.value = querySnapshotData['price'];
-  isStock.value = querySnapshotData['isStock'] ?? false; // default value
+watchEffect(() => {
+  console.log('watch effect', { id: id.value, name: product.value?.name });
+  newName.value = product.value?.name ?? '';
+  newPrice.value = product.value?.price ?? 0;
+  newIsStock.value = product.value?.isStock ?? false;
 });
 
-// S: for bad behaviour
-// watch(badName, () => {
-//   name.value = badName.value;
-// });
-// E: for bad behaviour
-
-watch(name, async () => {
-  const updateData = { name: name.value };
-  await updateDoc(doc(db, 'products', props.id), updateData);
-});
-watch(price, async () => {
-  const updateData = { price: price.value };
-  await updateDoc(doc(db, 'products', props.id), updateData);
-});
-watch(isStock, async () => {
-  const updateData = { isStock: isStock.value };
-  await updateDoc(doc(db, 'products', props.id), updateData);
-});
+const updateNewProduct = () => {
+  if (product.value && id.value) {
+    updateProduct(id.value, {
+      name: newName.value,
+      price: newPrice.value,
+      isStock: newIsStock.value,
+    });
+  }
+};
 </script>
 
 <template>
   <div>
-    <!-- <VTextField v-model="badName" label="Product Name" /> -->
-    <VTextField v-model="name" label="Product Name" />
-    <VTextField v-model="price" type="number" label="Product Price" />
-    <VSwitch v-model="isStock" :label="`isStock: ${isStock}`" />
+    <VTextField v-model="newName" label="Product Name" />
+    <VNumberInput
+      v-model="newPrice"
+      :min="0"
+      control-variant="stacked"
+      label="Product Price"
+    />
+    <VSwitch v-model="newIsStock" :label="`isStock: ${newIsStock}`" />
+
+    <VBtn color="primary" @click="updateNewProduct()"> Update </VBtn>
     <br />
-    <!-- <div>data from fire store: {{ productOnDB }}</div> -->
-    <div>data from props: {{ props.productDbSync?.name }}</div>
+    <div>prev: {{ product?.name ?? 'no name' }}, new: {{ newName }}</div>
     <br />
-    <div>data from props: {{ props.productDbSync?.price }}</div>
+    <div>prev: {{ product?.price ?? 'no price' }}, new: {{ newPrice }}</div>
     <br />
-    <div>data from props: {{ props.productDbSync?.isStock }}</div>
+    <div>prev: {{ product?.isStock ?? 'no bool' }}, new: {{ newIsStock }}</div>
   </div>
 </template>

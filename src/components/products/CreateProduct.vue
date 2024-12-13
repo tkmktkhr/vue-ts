@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { Product, productSchema } from '@/domains/product';
 import { VSpacer, VSwitch } from 'vuetify/components';
 import { useField, useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
+// import { toTypedSchema } from '@vee-validate/zod';
 // import { computed } from 'vue';
 import { useProductStore } from '@/stores/ProductStore';
 
@@ -152,7 +152,8 @@ const manualReset = () => {
       :disabled="[...nameErrs, ...priceErrs].length > 0"
       color="primary"
       @click="createNewProduct()"
-      >Create</VBtn
     >
+      Create
+    </VBtn>
   </VContainer>
 </template>

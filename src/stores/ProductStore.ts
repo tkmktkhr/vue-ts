@@ -41,9 +41,16 @@ export const useProductStore = defineStore('ProductStore', () => {
     await addDoc(collection(db, `products`), resolveProduct(data));
   };
 
+  const updateProduct = async (id: string, data: Product): Promise<void> => {
+    await setDoc(doc(db, `products/${id}`), resolveProduct(data), {
+      merge: true,
+    });
+  };
+
   return {
     products,
     productsWithId,
     createProduct,
+    updateProduct,
   };
 });
