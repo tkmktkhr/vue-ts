@@ -12,15 +12,18 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@mdi/js": "^7.4.47",
+    "@vee-validate/zod": "^4.14.7",
     "@vueuse/core": "^10.11.0",
     "firebase": "^10.13.1",
     "lodash-es": "^4.17.21",
     "pinia": "^2.1.7",
     "ts-node": "^10.9.2",
+    "vee-validate": "^4.14.7",
     "vue": "^3.5.12",
     "vue-router": "^4.4.0",
     "vuefire": "^3.1.24",
-    "vuetify": "^3.7.2"
+    "vuetify": "^3.7.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@fortawesome/vue-fontawesome": "^3.0.8",
