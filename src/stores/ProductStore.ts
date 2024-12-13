@@ -7,6 +7,7 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  where,
   startAt,
   endAt,
 } from 'firebase/firestore';
@@ -23,7 +24,8 @@ export const useProductStore = defineStore('ProductStore', () => {
     computed(() => {
       return query(
         collection(db, `products`),
-        orderBy('detail.type.createdDate'),
+        where('disabled', '==', false), // need indexes
+        orderBy('detail.type.createdDate'), // no need indexes
         startAt('2023-01-01'),
         endAt('2023-12-31'),
       );
@@ -52,21 +54,19 @@ export const useProductStore = defineStore('ProductStore', () => {
     await addDoc(collection(db, `products`), {
       created: serverTimestamp(),
       updated: serverTimestamp(),
+      disabled: false,
+      detail: {
+        type: { name: 'machine', createdDate: '2022-01-01', version: '1.0.0' },
+      },
       ...resolveProduct(data),
     });
   };
 
   const updateProduct = async (id: string, data: Product): Promise<void> => {
-    const todo = {
-      detail: {
-        type: { name: 'machine', createdDate: '2022-01-01', version: '1.0.0' },
-      },
-    };
     await setDoc(
       doc(db, `products/${id}`),
       {
         updated: serverTimestamp(),
-        ...todo,
         ...resolveProduct(data),
       },
       {
