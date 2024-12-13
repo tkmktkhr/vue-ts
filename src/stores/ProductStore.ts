@@ -4,6 +4,7 @@ import {
   setDoc,
   doc,
   addDoc,
+  serverTimestamp,
 } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
@@ -38,13 +39,24 @@ export const useProductStore = defineStore('ProductStore', () => {
   });
 
   const createProduct = async (data: Product): Promise<void> => {
-    await addDoc(collection(db, `products`), resolveProduct(data));
+    await addDoc(collection(db, `products`), {
+      created: serverTimestamp(),
+      updated: serverTimestamp(),
+      ...resolveProduct(data),
+    });
   };
 
   const updateProduct = async (id: string, data: Product): Promise<void> => {
-    await setDoc(doc(db, `products/${id}`), resolveProduct(data), {
-      merge: true,
-    });
+    await setDoc(
+      doc(db, `products/${id}`),
+      {
+        updated: serverTimestamp(),
+        ...resolveProduct(data),
+      },
+      {
+        merge: true,
+      },
+    );
   };
 
   return {

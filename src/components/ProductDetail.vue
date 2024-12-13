@@ -57,6 +57,7 @@ const updateNewProduct = () => {
 
     <VBtn color="primary" @click="updateNewProduct()"> Update </VBtn>
     <br />
+    <br />
     <div>prev: {{ product?.name ?? 'no name' }}, new: {{ newName }}</div>
     <br />
     <div>prev: {{ product?.price ?? 'no price' }}, new: {{ newPrice }}</div>
