@@ -27,7 +27,6 @@ const newPrice = ref<number | null>(product.value?.price ?? 0);
 const newIsStock = ref<boolean | null>(product.value?.isStock ?? false);
 
 watchEffect(() => {
-  console.log('watch effect', { id: id.value, name: product.value?.name });
   newName.value = product.value?.name ?? '';
   newPrice.value = product.value?.price ?? 0;
   newIsStock.value = product.value?.isStock ?? false;

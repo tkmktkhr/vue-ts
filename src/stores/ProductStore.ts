@@ -5,6 +5,8 @@ import {
   doc,
   addDoc,
   serverTimestamp,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
@@ -17,7 +19,8 @@ export const useProductStore = defineStore('ProductStore', () => {
 
   const products = useCollection<Product>(
     computed(() => {
-      return collection(db, `products`);
+      return query(collection(db, `products`), orderBy('created', 'asc'));
+      // return query(collection(db, `products`), orderBy('created', 'asc'));
     }),
   );
 
@@ -47,10 +50,16 @@ export const useProductStore = defineStore('ProductStore', () => {
   };
 
   const updateProduct = async (id: string, data: Product): Promise<void> => {
+    const todo = {
+      detail: {
+        type: { name: 'machine', createdDate: '2022-01-01', version: '1.0.0' },
+      },
+    };
     await setDoc(
       doc(db, `products/${id}`),
       {
         updated: serverTimestamp(),
+        ...todo,
         ...resolveProduct(data),
       },
       {
