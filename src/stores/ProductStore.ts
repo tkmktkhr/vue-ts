@@ -7,6 +7,8 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  startAt,
+  endAt,
 } from 'firebase/firestore';
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
@@ -19,7 +21,12 @@ export const useProductStore = defineStore('ProductStore', () => {
 
   const products = useCollection<Product>(
     computed(() => {
-      return query(collection(db, `products`), orderBy('created', 'asc'));
+      return query(
+        collection(db, `products`),
+        orderBy('detail.type.createdDate'),
+        startAt('2023-01-01'),
+        endAt('2023-12-31'),
+      );
       // return query(collection(db, `products`), orderBy('created', 'asc'));
     }),
   );
