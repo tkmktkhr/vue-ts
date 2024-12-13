@@ -1,3 +1,12 @@
+import { z } from 'zod';
+
+export const productSchema = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  price: z.number(),
+  isStock: z.boolean(),
+});
+
 export class Product {
   id?: string | undefined;
   name: string | null;

@@ -109,7 +109,7 @@ const newProduct = computed(() => ({
       v-model:is-stock="isStock"
     />
     <br />
-    {{ newProduct ?? 'no new product' }}
+    parent comp: {{ newProduct ?? 'no new product' }}
     <br />
     <!-- <ProductsListSample
       :product="product"
