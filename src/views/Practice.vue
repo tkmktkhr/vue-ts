@@ -360,7 +360,7 @@ watch(isOpen, (val) => {
           </td> -->
 
           <!-- <template v-for="column in columns">
-            <td>{{ column }}</td>
+            <td>column:{{ column }}</td>
           </template> -->
 
           <td v-for="column in columns">
