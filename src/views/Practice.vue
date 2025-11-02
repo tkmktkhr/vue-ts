@@ -360,7 +360,7 @@ watch(isOpen, (val) => {
           </td> -->
 
           <!-- <template v-for="column in columns">
-            <td>{{ column }}</td>
+            <td>column:{{ column }}</td>
           </template> -->
 
           <td v-for="column in columns">
@@ -398,7 +398,7 @@ watch(isOpen, (val) => {
           <!-- <td><VBtn>Open</VBtn></td> -->
 
           <!-- <td>{{ item.value.col3 }}</td>
-          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>amount:{{ item.items.map((c) => c.value.amount) }}</td>
           <td>group_parent:</td>
           <td>group_parent:</td> -->
         </tr>
