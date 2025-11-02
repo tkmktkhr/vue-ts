@@ -398,7 +398,7 @@ watch(isOpen, (val) => {
           <!-- <td><VBtn>Open</VBtn></td> -->
 
           <!-- <td>{{ item.value.col3 }}</td>
-          <td>小計：{{ item.items.map((c) => c.value.amount) }}</td>
+          <td>amount:{{ item.items.map((c) => c.value.amount) }}</td>
           <td>group_parent:</td>
           <td>group_parent:</td> -->
         </tr>
